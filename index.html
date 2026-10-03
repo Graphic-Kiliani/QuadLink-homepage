@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>QuadLink: Autoregressive Quad-Dominant Mesh Generation via Point-Relation Learning</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro|Jost:wght@400;500;600" rel="stylesheet">
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="static/css/bulma-slider.min.css">
@@ -21,6 +21,9 @@
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
+
+  <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 </head>
 <body>
 
@@ -29,7 +32,8 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">QuadLink: Autoregressive Quad-Dominant Mesh Generation via Point-Relation Learning</h1>
+          <h1 class="title is-1 publication-title">QuadLink</h1>
+          <p class="hero-subtitle">Autoregressive Quad-Dominant Mesh Generation via Point-Relation Learning</p>
           <div class="is-size-5 publication-authors">
             <span class="author-block"><a href="https://graphic-kiliani.github.io/homepage/" target="_blank">Yiheng Zhang</a><sup>1,2</sup>,</span>
             <span class="author-block"><a href="https://czvvd.github.io/homepage/" target="_blank">Zhe Zhu</a><sup>2</sup>,</span>
@@ -193,6 +197,65 @@
   </div>
 </section>
 
+<section class="section viewer-section" id="results">
+  <div class="container is-max-desktop">
+    <div class="compact-heading has-text-centered">
+      <h2 class="title is-3">Qualitative Results</h2>
+    </div>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            We show quad-dominant meshes produced by <b>QuadLink</b> from raw point clouds.
+            Each asset can be inspected interactively: drag to rotate and scroll to zoom, then switch between the shaded
+            surface and its wireframe to inspect the underlying topology. The wireframe is drawn from the real face loops,
+            so quads remain quads and the edge flow of the generated mesh stays visible.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-controls">
+      <div class="mesh-picker">
+        <p class="context-label">Assets</p>
+        <div class="mesh-pills" id="quad-mesh-pills"></div>
+      </div>
+    </div>
+
+    <div class="viewer-demo">
+      <div class="viewer-stage">
+        <div class="viewer-toolbar">
+          <span class="live-badge"><i></i>Live viewer</span>
+          <fieldset class="view-mode-picker">
+            <div>
+              <label><input type="radio" name="quad-view-mode" value="shaded">Shaded</label>
+              <label><input type="radio" name="quad-view-mode" value="wireframe">Wireframe</label>
+              <label class="is-selected"><input type="radio" name="quad-view-mode" value="both" checked>Shaded + Wireframe</label>
+            </div>
+          </fieldset>
+          <button type="button" class="viewer-toggle" id="quad-autorotate" aria-pressed="false">Auto-rotate</button>
+        </div>
+
+        <div class="viewer-canvas" id="quad-viewer-canvas">
+          <div class="viewer-status" id="quad-viewer-status">Loading model…</div>
+          <div class="viewer-hint">Drag to rotate · Scroll to zoom</div>
+        </div>
+      </div>
+
+      <div class="viewer-context">
+        <div>
+          <p class="context-label">Generated mesh</p>
+          <h3 id="quad-mesh-name">Asset 01</h3>
+        </div>
+        <div class="result-labels">
+          <p class="context-label">Topology</p>
+          <ul id="quad-mesh-stats"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Data Curation</h2>
@@ -236,68 +299,6 @@
   </div>
 </section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Quantitative Results</h2>
-    <div class="table-container quad-table-wrap">
-      <table class="table is-striped is-hoverable is-fullwidth">
-        <thead>
-          <tr>
-            <th>Method</th>
-            <th>CD</th>
-            <th>HD</th>
-            <th>IoU</th>
-            <th>QR</th>
-            <th>EFR</th>
-            <th>Neatness</th>
-            <th>Artistry</th>
-            <th>Shape</th>
-            <th>Topology</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>BPT</td><td>0.052</td><td>0.138</td><td>0.922</td><td>68.0%</td><td>0.328</td><td>0.772</td><td>0.737</td><td>0.330</td><td>0.578</td></tr>
-          <tr><td>DeepMesh</td><td>0.076</td><td>0.211</td><td>0.886</td><td>77.3%</td><td>0.381</td><td>0.808</td><td class="quad-second-cell">1.021</td><td class="quad-second-cell">0.882</td><td class="quad-second-cell">1.097</td></tr>
-          <tr><td>FastMesh</td><td>0.036</td><td>0.087</td><td>0.954</td><td>5.4%</td><td>0.244</td><td>0.238</td><td>0.516</td><td>0.558</td><td>0.322</td></tr>
-          <tr><td>TreeMeshGPT</td><td>0.153</td><td>0.372</td><td>0.696</td><td>85.9%</td><td>0.201</td><td>0.080</td><td>0.063</td><td>0.089</td><td>0.065</td></tr>
-          <tr><td>MeshMosaic</td><td>0.062</td><td>0.233</td><td>0.924</td><td>47.2%</td><td>0.292</td><td>0.230</td><td>0.492</td><td>0.420</td><td>0.386</td></tr>
-          <tr><td>Instant-Meshes</td><td>0.038</td><td>0.120</td><td>0.905</td><td>100%</td><td>0.403</td><td>0.313</td><td>0.206</td><td>0.259</td><td>0.191</td></tr>
-          <tr><td>QuadriFlow</td><td>0.077</td><td>0.305</td><td>0.695</td><td>100%</td><td>0.289</td><td>0.108</td><td>0.087</td><td>0.137</td><td>0.186</td></tr>
-          <tr><td>QuadWild</td><td class="quad-second-cell">0.022</td><td class="quad-second-cell">0.086</td><td class="quad-second-cell">0.978</td><td>100%</td><td class="quad-second-cell">0.547</td><td class="quad-second-cell">1.136</td><td>0.486</td><td>0.832</td><td>0.703</td></tr>
-          <tr class="quad-result-row"><td class="quad-best-cell">Ours</td><td class="quad-best-cell">0.021</td><td class="quad-best-cell">0.056</td><td class="quad-best-cell">0.995</td><td>79.4%</td><td class="quad-best-cell">0.714</td><td class="quad-best-cell">2.315</td><td class="quad-best-cell">2.392</td><td class="quad-best-cell">2.493</td><td class="quad-best-cell">2.472</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="has-text-centered is-size-6 has-text-grey">Table 1 : Objective metrics and User Study comparison. QR is reported as a reference statistic, while EFR measures structured edge-flow quality.</p>
-  </div>
-</section>
-
-<!-- <section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
-    <div class="columns is-variable is-5">
-      <div class="column">
-        <div class="quad-placeholder quad-placeholder-small">
-          <div class="quad-placeholder-title">Figure 4 Placeholder</div>
-          <div class="quad-placeholder-subtitle">Comparison with triangle-based generation methods: Input, BPT, DeepMesh, FastMesh, and Ours.</div>
-        </div>
-      </div>
-      <div class="column">
-        <div class="quad-placeholder quad-placeholder-small">
-          <div class="quad-placeholder-title">Figure 5 Placeholder</div>
-          <div class="quad-placeholder-subtitle">Comparison with field-guided quad remeshing: Original mesh, Instant-Meshes, QuadriFlow, and Ours.</div>
-        </div>
-      </div>
-    </div>
-    <div class="quad-placeholder">
-      <div class="quad-placeholder-title">Figure 6 Placeholder</div>
-      <div class="quad-placeholder-subtitle">Ablation on Face Assembly under Euclidean and latent retrieval spaces with validation criteria.</div>
-    </div>
-  </div>
-</section> -->
-
-
-
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
@@ -325,5 +326,6 @@
   </div>
 </footer>
 
+<script src="static/js/quad-viewer.js"></script>
 </body>
 </html>
