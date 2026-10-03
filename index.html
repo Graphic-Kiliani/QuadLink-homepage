@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <meta charset="utf-8">
+  <meta name="description" content="QuadLink: Autoregressive Quad-Dominant Mesh Generation via Point-Relation Learning">
+  <meta name="keywords" content="Quad-dominant mesh generation, autoregressive model, polygonal mesh, point relation learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QuadLink: Autoregressive Quad-Dominant Mesh Generation via Point-Relation Learning</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">QuadLink: Autoregressive Quad-Dominant Mesh Generation via Point-Relation Learning</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://graphic-kiliani.github.io/homepage/" target="_blank">Yiheng Zhang</a><sup>1,2</sup>,</span>
+            <span class="author-block"><a href="https://czvvd.github.io/homepage/" target="_blank">Zhe Zhu</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://trshen925.github.io" target="_blank">Tingrui Shen</a><sup>3</sup>,</span>
+            <span class="author-block"><a href="https://www.caizhuojiang.com/" target="_blank">Zhuojiang Cai</a><sup>4</sup>,</span>
+            <span class="author-block"><a href="https://github.com/tingyunaiai9" target="_blank">Tianxiao Li</a><sup>5</sup>,</span>
+            <span class="author-block"><a href="https://github.com/Zazexy/" target="_blank">Zixing Zhao</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://qiujiedong.github.io/" target="_blank">Qiujie Dong</a><sup>6</sup>,</span>
+            <span class="author-block"><a href="https://frank-zy-dou.github.io/" target="_blank">Zhiyang Dou</a><sup>7</sup>,</span>
+            <span class="author-block"><a href="https://jiepengwang.github.io/" target="_blank">Jiepeng Wang</a><sup>6</sup>,</span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=%7ELe_Wan1" target="_blank">Le Wan</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?user=KhFGpFIAAAAJ&amp;hl=en" target="_blank">Yuwang Wang</a><sup>5</sup>,</span>
+            <span class="author-block"><a href="https://engineering.tamu.edu/cse/profiles/Wang-Wenping.html" target="_blank">Wenping Wang</a><sup>8</sup>,</span>
+            <span class="author-block"><a href="https://liuyuan-pal.github.io/" target="_blank">Yuan Liu</a><sup>1&dagger;</sup>,</span>
+            <span class="author-block"><a href="https://clinplayer.github.io/" target="_blank">Cheng Lin</a><sup>9&dagger;</sup></span>
+          </div>
+
+          <div class="is-size-6 publication-authors affiliation-block">
+            <span class="author-block"><sup>1</sup>Hong Kong University of Science and Technology</span>
+            <span class="author-block"><sup>2</sup>Tencent VISVISE</span>
+            <span class="author-block"><sup>3</sup>Peking University</span>
+            <span class="author-block"><sup>4</sup>Technical University of Munich</span>
+            <span class="author-block"><sup>5</sup>Tsinghua University</span>
+            <span class="author-block"><sup>6</sup>The University of Hong Kong</span>
+            <span class="author-block"><sup>7</sup>Massachusetts Institute of Technology</span>
+            <span class="author-block"><sup>8</sup>Texas A&amp;M University</span>
+            <span class="author-block"><sup>9</sup>Macau University of Science and Technology</span>
+          </div>
+
+          <div class="is-size-6 publication-authors">
+            <span class="author-block"><sup>&dagger;</sup>Corresponding authors</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2605.16813" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/Graphic-Kiliani/QuadLink" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <a class="github-button"
+                 href="https://github.com/Graphic-Kiliani/QuadLink"
+                 data-icon="octicon-star"
+                 data-show-count="true"
+                 data-size="large"
+                 aria-label="Star Graphic-Kiliani/QuadLink on GitHub">Stars</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section quad-video-section" id="video">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Video</h2>
+    <video class="quad-video" controls muted playsinline poster="static/images/quadlink_teaser.jpg">
+      <source src="static/videos/quadlink_video.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            The generation of production-ready quad-dominant meshes is a cornerstone of modern 3D content creation.
+            Generating anisotropic quad-dominant meshes from point clouds is challenging, as existing methods are typically limited to producing either pure triangular meshes or pure quadrilateral meshes with isotropic densities.
+            In this paper, we present <b>QuadLink</b>, a unified framework consisting of three stages for quad-dominant mesh generation by linking points into structured faces.
+            <b>QuadLink</b> formulates polygonal mesh generation as a hybrid centroid-conditioned vertex linking model: it first predicts a unified set of anchors (vertices and face centroids), then learns centroid-conditioned links that associate vertices with face centroids, and finally assembles polygonal faces with a quad-first strategy guided by robust geometric verification strategies.
+            This link-based formulation enables efficient generation of sparse and anisotropic quad-dominant meshes with coherent edge flow and meanwhile supporting hybrid polygonal topology.
+            To construct training data for this model, we further introduce a <em>Tri-to-Quad Operator</em> that converts artistic triangle meshes into quad-dominant training data via global merge selection.
+            Extensive experiments show that <b>QuadLink</b> produces production-ready quad-dominant meshes from point clouds and achieves improved geometric fidelity and topological quality compared to prior baselines.
+            Our method natively supports hybrid polygonal topology, generalizing to arbitrary n-gon meshes without architectural changes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Introduction for Quad Dominant Meshes</h2>
+    <div class="quad-intro-split">
+      <div class="quad-intro-media">
+        <img src="static/images/intro_artist_geometry_v3.jpg" alt="Comparison of quad remesher, Delaunay, artist quad, and artist tri mesh structures">
+      </div>
+      <div class="quad-intro-copy">
+        <div class="content has-text-justified">
+          <p>
+            Quad-dominant meshes are composed predominantly of quadrilateral faces, while retaining a small number of triangles where complex topology or local transitions require them.
+            Compared with dense triangle meshes, artist-designed quad-dominant topology provides clearer edge flow, more structured surface layout, and more editable geometry.
+          </p>
+          <p>
+            This representation is widely used in practical content creation because topology directly affects whether an asset can be edited, animated, simulated, and integrated into production pipelines.
+            The figure above contrasts artist-style quad topology with triangle-based and remeshed alternatives, highlighting why geometry fidelity alone is not enough for production-ready 3D assets.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="quad-figure">
+      <img src="static/images/intro_application_v2.png" alt="Applications of quad-dominant meshes in texture, modeling, and editing workflows">
+    </div>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            In modern workflows, quad-dominant meshes are preferred for modeling, animation, simulation, film, games, and industrial creation.
+            Their regular edge flow supports deformation and editing, while the small number of necessary triangles helps resolve singularities and intricate local structures.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method Overview</h2>
+    <div class="quad-figure">
+      <img src="static/images/overview_v4.png" alt="QuadLink method overview with anchor prediction, link modeling, and face assembly">
+    </div>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            <b>QuadLink</b> first predicts mesh vertices and face centroids as primitive anchors from an input point cloud.
+            It then learns centroid-to-vertex relations in a latent space using contrastive learning, pulling valid face vertices close to their centroids while pushing unrelated vertices away.
+            Finally, a deterministic quad-first assembly module reconstructs faces with geometric prefiltering and centroid tolerance checks.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="quad-method-grid">
+      <div class="quad-method-card">
+        <h3 class="title is-5">Stage I: Anchor Prediction</h3>
+        <p>Generates a compact sequence of vertices and face centroids with axis-aware coordinate tokenization.</p>
+      </div>
+      <div class="quad-method-card">
+        <h3 class="title is-5">Stage II: Link Modeling</h3>
+        <p>Learns centroid-conditioned vertex links in a contrastive feature space for robust face-level grouping.</p>
+      </div>
+      <div class="quad-method-card">
+        <h3 class="title is-5">Stage III: Face Assembly</h3>
+        <p>Builds quad-dominant faces with progressive candidate selection, geometric verification, and triangle fallback.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Data Curation</h2>
+    <div class="quad-figure">
+      <img src="static/images/exp_operator_comparison_v6.png" alt="Comparison of input, Blossom-Quad, greedy, and global operator results">
+    </div>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            We introduce a <em>Tri-to-Quad Operator</em> that converts widely available artist-designed triangular meshes into quad-dominant meshes with anisotropic structures and coherent edge flow.
+            The operator combines geometric prefiltering, global merging selection, and deterministic normal-consistency enforcement, which produces training data that preserves production-ready quad-dominant topology to provide effective supervision for learning across all stages of <b>QuadLink</b>.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="quad-figure-grid">
+      <div>
+        <div class="quad-figure">
+          <img src="static/images/tri_to_quad_operator_ablation.png" alt="Qualitative ablation on the Tri-to-Quad Operator">
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            Ablations on the <em>Tri-to-Quad Operator</em> study geometry prefiltering and the merging quality terms <em>Q</em><sub>angle</sub> and <em>Q</em><sub>align</sub>.
+            Geometry prefiltering removes invalid candidates, while the angle term favors regular quads and the alignment term helps resolve ambiguous regions with smoother edge flow.
+          </p>
+        </div>
+      </div>
+      <div>
+        <div class="quad-figure">
+          <img src="static/images/efr_calculation_padded.png" alt="Feature line extraction for Edge Flow Ratio calculation">
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            Edge Flow Ratio (EFR) measures whether a quad-dominant mesh preserves production-ready edge flow.
+            We extract hard edges from the ground-truth mesh and group connected chains into long polyline features and closed loop features, then match output edge chains to these salient feature lines.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Quantitative Results</h2>
+    <div class="table-container quad-table-wrap">
+      <table class="table is-striped is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>CD</th>
+            <th>HD</th>
+            <th>IoU</th>
+            <th>QR</th>
+            <th>EFR</th>
+            <th>Neatness</th>
+            <th>Artistry</th>
+            <th>Shape</th>
+            <th>Topology</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>BPT</td><td>0.052</td><td>0.138</td><td>0.922</td><td>68.0%</td><td>0.328</td><td>0.772</td><td>0.737</td><td>0.330</td><td>0.578</td></tr>
+          <tr><td>DeepMesh</td><td>0.076</td><td>0.211</td><td>0.886</td><td>77.3%</td><td>0.381</td><td>0.808</td><td class="quad-second-cell">1.021</td><td class="quad-second-cell">0.882</td><td class="quad-second-cell">1.097</td></tr>
+          <tr><td>FastMesh</td><td>0.036</td><td>0.087</td><td>0.954</td><td>5.4%</td><td>0.244</td><td>0.238</td><td>0.516</td><td>0.558</td><td>0.322</td></tr>
+          <tr><td>TreeMeshGPT</td><td>0.153</td><td>0.372</td><td>0.696</td><td>85.9%</td><td>0.201</td><td>0.080</td><td>0.063</td><td>0.089</td><td>0.065</td></tr>
+          <tr><td>MeshMosaic</td><td>0.062</td><td>0.233</td><td>0.924</td><td>47.2%</td><td>0.292</td><td>0.230</td><td>0.492</td><td>0.420</td><td>0.386</td></tr>
+          <tr><td>Instant-Meshes</td><td>0.038</td><td>0.120</td><td>0.905</td><td>100%</td><td>0.403</td><td>0.313</td><td>0.206</td><td>0.259</td><td>0.191</td></tr>
+          <tr><td>QuadriFlow</td><td>0.077</td><td>0.305</td><td>0.695</td><td>100%</td><td>0.289</td><td>0.108</td><td>0.087</td><td>0.137</td><td>0.186</td></tr>
+          <tr><td>QuadWild</td><td class="quad-second-cell">0.022</td><td class="quad-second-cell">0.086</td><td class="quad-second-cell">0.978</td><td>100%</td><td class="quad-second-cell">0.547</td><td class="quad-second-cell">1.136</td><td>0.486</td><td>0.832</td><td>0.703</td></tr>
+          <tr class="quad-result-row"><td class="quad-best-cell">Ours</td><td class="quad-best-cell">0.021</td><td class="quad-best-cell">0.056</td><td class="quad-best-cell">0.995</td><td>79.4%</td><td class="quad-best-cell">0.714</td><td class="quad-best-cell">2.315</td><td class="quad-best-cell">2.392</td><td class="quad-best-cell">2.493</td><td class="quad-best-cell">2.472</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="has-text-centered is-size-6 has-text-grey">Table 1 : Objective metrics and User Study comparison. QR is reported as a reference statistic, while EFR measures structured edge-flow quality.</p>
+  </div>
+</section>
+
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
+    <div class="columns is-variable is-5">
+      <div class="column">
+        <div class="quad-placeholder quad-placeholder-small">
+          <div class="quad-placeholder-title">Figure 4 Placeholder</div>
+          <div class="quad-placeholder-subtitle">Comparison with triangle-based generation methods: Input, BPT, DeepMesh, FastMesh, and Ours.</div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="quad-placeholder quad-placeholder-small">
+          <div class="quad-placeholder-title">Figure 5 Placeholder</div>
+          <div class="quad-placeholder-subtitle">Comparison with field-guided quad remeshing: Original mesh, Instant-Meshes, QuadriFlow, and Ours.</div>
+        </div>
+      </div>
+    </div>
+    <div class="quad-placeholder">
+      <div class="quad-placeholder-title">Figure 6 Placeholder</div>
+      <div class="quad-placeholder-subtitle">Ablation on Face Assembly under Euclidean and latent retrieval spaces with validation criteria.</div>
+    </div>
+  </div>
+</section> -->
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <p>If you find our work helpful, please consider citing:</p>
+    <pre><code>@article{zhang2026quadlink,
+  title={QuadLink: Autoregressive Quad-Dominant Mesh Generation via Point-Relation Learning},
+  author={Zhang, Yiheng and Zhu, Zhe and Shen, Tingrui and Cai, Zhuojiang and Li, Tianxiao and Zhao, Zixing and Dong, Qiujie and Dou, Zhiyang and Wang, Jiepeng and Wan, Le and others},
+  journal={arXiv preprint arXiv:2605.16813},
+  year={2026}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p class="is-size-7">
+            This website follows the academic project-page format used by Nerfies.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
