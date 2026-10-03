@@ -5,7 +5,7 @@
 
 (function () {
   var MODELS = [];
-  for (var i = 1; i <= 13; i++) {
+  for (var i = 1; i <= 11; i++) {
     MODELS.push({
       id: i,
       label: 'Asset ' + String(i).padStart(2, '0'),
