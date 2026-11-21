@@ -172,6 +172,11 @@
           "name": "Orbital Drone",
           "thumb": "thumbs/orbital-drone.webp",
           "file": "results/orbital-drone.obj"
+        },
+        {
+          "name": "Racing Craft",
+          "thumb": "thumbs/racing-craft.webp",
+          "file": "results/racing-craft.obj"
         }
       ]
     },
@@ -197,6 +202,11 @@
           "name": "Mechanical Tool",
           "thumb": "thumbs/mechanical-tool.webp",
           "file": "results/mechanical-tool.obj"
+        },
+        {
+          "name": "Robotic Arm",
+          "thumb": "thumbs/robotic-arm.webp",
+          "file": "results/robotic-arm.obj"
         }
       ]
     },
@@ -242,6 +252,11 @@
           "name": "Long Mechanical Prop",
           "thumb": "thumbs/native-quad-comparison.webp",
           "file": "results/native-quad-comparison-quadlink.obj"
+        },
+        {
+          "name": "Pendant",
+          "thumb": "thumbs/pendant.webp",
+          "file": "results/pendant.obj"
         }
       ]
     },
@@ -294,36 +309,6 @@
           "name": "Humanoid Character",
           "thumb": "thumbs/operator-ablation.webp",
           "file": "curation/operator-ablation-full-operator.obj"
-        }
-      ]
-    },
-    {
-      "label": "Vehicles",
-      "cases": [
-        {
-          "name": "Racing Craft",
-          "thumb": "thumbs/racing-craft.webp",
-          "file": "results/racing-craft.obj"
-        }
-      ]
-    },
-    {
-      "label": "Mechanical",
-      "cases": [
-        {
-          "name": "Robotic Arm",
-          "thumb": "thumbs/robotic-arm.webp",
-          "file": "results/robotic-arm.obj"
-        }
-      ]
-    },
-    {
-      "label": "Props & Wearables",
-      "cases": [
-        {
-          "name": "Pendant",
-          "thumb": "thumbs/pendant.webp",
-          "file": "results/pendant.obj"
         }
       ]
     },

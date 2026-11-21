@@ -6,10 +6,10 @@
   <meta name="description" content="QuadLink generates quad-dominant meshes from point clouds. Explore the paper's meshes and Tri-to-Quad results in 3D.">
   <title>QuadLink · Autoregressive Quad-Dominant Mesh Generation</title>
   <link rel="stylesheet" href="static/css/fonts.css">
-  <link rel="stylesheet" href="static/css/index.css?v=20261121-categories">
+  <link rel="stylesheet" href="static/css/index.css?v=20261121-paper">
   <script defer src="static/js/vendor/three.min.js"></script>
   <script defer src="static/js/vendor/OrbitControls.js"></script>
-  <script defer src="static/js/quad-viewer.js?v=20261121-categories"></script>
+  <script defer src="static/js/quad-viewer.js?v=20261121-paper"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -29,7 +29,7 @@
   <section class="hero site-shell" aria-labelledby="project-title">
     <div class="hero-grid">
       <div class="hero-copy">
-        <h1 id="project-title">QuadLink<span aria-hidden="true">.</span></h1>
+        <h1 id="project-title"><span class="quad-wordmark">QuadLink</span></h1>
         <p class="subtitle">Autoregressive Quad-Dominant Mesh Generation via Point-Relation Learning</p>
         <div class="hero-links">
           <a class="button primary" href="#results">Explore the meshes</a>
@@ -37,7 +37,7 @@
         </div>
       </div>
       <video id="video" class="hero-video" width="1280" height="768" controls playsinline preload="none"
-             poster="static/videos/quadlink_video_poster.webp" aria-label="QuadLink project video">
+             poster="static/images/quadlink_teaser.jpg" aria-label="QuadLink project video">
         <source src="static/videos/quadlink_video.mp4" type="video/mp4">
         <a href="static/videos/quadlink_video.mp4">Download the project video</a>
       </video>
@@ -85,8 +85,10 @@
 
   <section id="method" class="site-shell section-inner" aria-labelledby="method-title">
     <div class="abstract-layout">
-      <h2>Abstract</h2>
-      <p>The generation of production-ready quad-dominant meshes is a cornerstone of modern 3D content creation. Generating anisotropic quad-dominant meshes from point clouds is challenging, as existing methods are typically limited to producing either pure triangular meshes or pure quadrilateral meshes with isotropic densities. In this paper, we present <b>QuadLink</b>, a unified framework consisting of three stages for quad-dominant mesh generation by linking points into structured faces. <b>QuadLink</b> formulates polygonal mesh generation as a hybrid centroid-conditioned vertex linking model: it first predicts a unified set of anchors (vertices and face centroids), then learns centroid-conditioned links that associate vertices with face centroids, and finally assembles polygonal faces with a quad-first strategy guided by robust geometric verification strategies. This link-based formulation enables efficient generation of sparse and anisotropic quad-dominant meshes with coherent edge flow and meanwhile supporting hybrid polygonal topology. To construct training data for this model, we further introduce a <em>Tri-to-Quad Operator</em> that converts artistic triangle meshes into quad-dominant training data via global merge selection. Extensive experiments show that <b>QuadLink</b> produces production-ready quad-dominant meshes from point clouds and achieves improved geometric fidelity and topological quality compared to prior baselines. Our method natively supports hybrid polygonal topology, generalizing to arbitrary n-gon meshes without architectural changes.</p>
+      <h2 id="abstract-title">Abstract</h2>
+      <div class="abstract-scroll" tabindex="0" role="region" aria-labelledby="abstract-title">
+        <p>The generation of production-ready quad-dominant meshes is a cornerstone of modern 3D content creation. Generating anisotropic quad-dominant meshes from point clouds is challenging, as existing methods are typically limited to producing either pure triangular meshes or pure quadrilateral meshes with isotropic densities. In this paper, we present <strong>QuadLink</strong>, a unified framework consisting of three stages for quad-dominant mesh generation by linking points into structured faces. <strong>QuadLink</strong> formulates polygonal mesh generation as a hybrid centroid-conditioned vertex linking model: it first predicts a unified set of anchors (vertices and face centroids), then learns centroid-conditioned links that associate vertices with face centroids, and finally assembles polygonal faces with a quad-first strategy guided by robust geometric verification strategies. This link-based formulation avoids repeatedly encoding shared vertices across faces, which enables robust and efficient generation of sparse and anisotropic quad-dominant meshes with coherent edge flow and shorter autoregressive token sequences. To construct training data for this model, we further introduce a detailed <em>Tri-to-Quad Operator</em> that converts artistic triangle meshes into quad-dominant training data via geometry prefiltering and global merge selection. Extensive experiments show that <strong>QuadLink</strong> produces production-ready quad-dominant meshes from point clouds and achieves improved geometric fidelity and topological quality compared to prior baselines. Meanwhile, our method natively supports hybrid polygonal topology, generalizing to arbitrary n-gon meshes without architectural changes.</p>
+      </div>
     </div>
     <div class="section-heading method-heading">
       <h2 id="method-title">Method Overview</h2>

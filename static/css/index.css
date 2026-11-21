@@ -64,7 +64,18 @@ a { color: inherit; }
   font: 700 clamp(3.75rem, 7.65vw, 7.5rem)/.89 var(--display);
   letter-spacing: -.084em;
 }
-.hero h1 span { color: #18755f; }
+.quad-wordmark { display: inline-block; padding-block: .08em; margin-block: -.08em; }
+@supports (background-clip: text) {
+  .quad-wordmark {
+    background: #173b31 url("../images/quad-wordmark-mesh.webp") center / 100% 100%;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: .006em #16352c;
+  }
+}
+@media (forced-colors: active) {
+  .quad-wordmark { background: none; color: CanvasText; -webkit-text-stroke: 0; }
+}
 .subtitle { max-width: 27ch; margin-top: 24px; font-size: clamp(1.15rem, 2vw, 1.62rem); line-height: 1.34; }
 .hero-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
 .button {
@@ -221,6 +232,16 @@ h2 { font: 600 clamp(2.25rem, 5vw, 4rem)/1.05 var(--display); letter-spacing: -.
 .mesh-stats dd { margin: 0; font-size: .875rem; font-variant-numeric: tabular-nums; }
 
 .abstract-layout { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(0, 2.35fr); gap: 20px 40px; padding-bottom: 56px; border-bottom: 1px solid var(--line); }
+.abstract-scroll {
+  max-block-size: 10rem;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  scrollbar-color: #5e8273 #e0e8e2;
+  padding: 13px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fafbf9;
+}
 .abstract-layout p { max-width: 80ch; }
 .method-heading { margin-top: 56px; }
 .method-figure { padding: clamp(8px, 2vw, 24px); background: white; border: 1px solid var(--line); border-radius: 12px; }
