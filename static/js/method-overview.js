@@ -1,18 +1,28 @@
 const methodStages = document.querySelector('.method-stages');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
-if (methodStages && !reducedMotion.matches && 'IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(([entry]) => {
-    if (!entry.isIntersecting) return;
-    observer.disconnect();
-    if (reducedMotion.matches) return;
+if (methodStages && 'IntersectionObserver' in window) {
+  const stages = Array.from(methodStages.children);
+  const revealThreshold = .34;
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) {
+        entry.target.classList.remove('is-in-view');
+      } else if (entry.intersectionRatio >= revealThreshold) {
+        entry.target.classList.add('is-in-view');
+      }
+    }
+  }, { threshold: [0, revealThreshold] });
 
-    Array.from(methodStages.children).forEach((stage, index) => {
-      stage.animate(
-        [{ opacity: 0, transform: 'translateY(9px)' }, { opacity: 1, transform: 'translateY(0)' }],
-        { duration: 420, delay: index * 240, easing: 'ease-out', fill: 'backwards' }
-      );
-    });
-  }, { threshold: .16 });
-  observer.observe(methodStages);
+  function updateMotion() {
+    observer.disconnect();
+    methodStages.classList.toggle('scroll-reveal', !reducedMotion.matches);
+    for (const stage of stages) {
+      stage.classList.remove('is-in-view');
+      if (!reducedMotion.matches) observer.observe(stage);
+    }
+  }
+
+  reducedMotion.addEventListener('change', updateMotion);
+  updateMotion();
 }

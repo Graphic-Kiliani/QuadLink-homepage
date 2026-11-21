@@ -245,6 +245,15 @@ h2 { font: 600 clamp(2.25rem, 5vw, 4rem)/1.05 var(--display); letter-spacing: -.
   border-radius: 12px;
 }
 .method-stages li { display: grid; grid-template-rows: auto 1fr; }
+.method-stages li:nth-child(2) { --reveal-delay: .16s; }
+.method-stages li:nth-child(3) { --reveal-delay: .32s; }
+@media (prefers-reduced-motion: no-preference) {
+  .method-stages.scroll-reveal li:not(.is-in-view) { opacity: 0; transform: translateY(12px); }
+  .method-stages.scroll-reveal li.is-in-view {
+    transition: opacity .42s ease-out, transform .42s ease-out;
+    transition-delay: var(--reveal-delay, 0s);
+  }
+}
 .method-stages img { width: 100%; height: auto; }
 .method-stages p { padding: 13px clamp(10px, 1.25vw, 18px); font-size: .9375rem; line-height: 1.45; }
 .method-stages li:nth-child(1) p { background: #edf7ef; }
@@ -279,4 +288,5 @@ h2 { font: 600 clamp(2.25rem, 5vw, 4rem)/1.05 var(--display); letter-spacing: -.
   .viewer-canvas { height: clamp(280px, 85vw, 470px); }
   .viewport-toolbar, .viewport-caption { padding-inline: 9px; }
   .method-stages { gap: 16px; }
+  .method-stages li:nth-child(n) { --reveal-delay: 0s; }
 }
