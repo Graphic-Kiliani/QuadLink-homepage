@@ -321,26 +321,6 @@
           "file": "curation/uv-column-uv-seams-protected.obj"
         }
       ]
-    },
-    {
-      "label": "Hard-Surface Assets",
-      "cases": [
-        {
-          "name": "Panel Assembly",
-          "thumb": "thumbs/panel-assembly.webp",
-          "file": "curation/panel-assembly.obj"
-        },
-        {
-          "name": "Armored Rover",
-          "thumb": "thumbs/armored-rover.webp",
-          "file": "curation/armored-rover.obj"
-        },
-        {
-          "name": "Curved Blade",
-          "thumb": "thumbs/curved-blade.webp",
-          "file": "curation/curved-blade.obj"
-        }
-      ]
     }
   ]
 }
