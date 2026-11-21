@@ -1,348 +1,409 @@
-/* Interactive quad-dominant mesh viewer for the QuadLink project page.
-   Renders each OBJ asset as a shaded surface plus a wireframe that is built
-   directly from the face loops, so the displayed topology is the real
-   quad/triangle layout instead of a triangulated diagonal soup. */
-
-(function () {
-  var MODELS = [];
-  for (var i = 1; i <= 11; i++) {
-    MODELS.push({
-      id: i,
-      label: 'Asset ' + String(i).padStart(2, '0'),
-      url: 'static/3d_assets/' + i + '.obj'
-    });
-  }
-
-  var host = document.getElementById('quad-viewer-canvas');
-  var statusEl = document.getElementById('quad-viewer-status');
-  var pillsHost = document.getElementById('quad-mesh-pills');
-  var statsHost = document.getElementById('quad-mesh-stats');
-  var nameEl = document.getElementById('quad-mesh-name');
-
-  if (!host || typeof THREE === 'undefined' || !THREE.OrbitControls) {
-    if (statusEl) {
-      statusEl.textContent = 'Viewer unavailable (three.js failed to load).';
-    }
-    return;
-  }
-
-  /* ---------------------------------------------------------------- three */
-
-  var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(42, 1, 0.01, 100);
-  camera.position.set(2.3, 1.6, 2.9);
-
-  var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.domElement.className = 'quad-viewer-surface';
-  host.appendChild(renderer.domElement);
-
-  var controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.08;
-  controls.rotateSpeed = 0.85;
-  controls.minDistance = 1.1;
-  controls.maxDistance = 12;
-  controls.autoRotateSpeed = 1.1;
-  controls.target.set(0, 0, 0);
-
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x2a2c38, 0.65));
-  var key = new THREE.DirectionalLight(0xffffff, 0.95);
-  key.position.set(2.4, 3.2, 3.6);
-  scene.add(key);
-  var rim = new THREE.DirectionalLight(0x61c2f3, 0.35);
-  rim.position.set(-3, -1.2, -2.4);
-  scene.add(rim);
-  var fill = new THREE.DirectionalLight(0xae71e8, 0.22);
-  fill.position.set(-2, 2, 2.5);
-  scene.add(fill);
-
-  var surfaceMat = new THREE.MeshStandardMaterial({
-    color: 0xd8dbe6,
-    roughness: 0.44,
-    metalness: 0.06,
-    side: THREE.DoubleSide,
-    polygonOffset: true,
-    polygonOffsetFactor: 1,
-    polygonOffsetUnits: 1
-  });
-  var wireMat = new THREE.LineBasicMaterial({
-    color: 0x50d2a2,
-    transparent: true,
-    opacity: 0.95
-  });
-
-  var group = new THREE.Group();
-  scene.add(group);
-  var surfaceMesh = null;
-  var wireMesh = null;
-  var viewMode = 'both';
-
-  /* ------------------------------------------------------------ obj parser */
+/* Surface triangulation is for shading only. The wireframe follows each original OBJ face. */
+(() => {
+  const assetRoot = 'static/3d_assets/';
+  const template = document.querySelector('#viewer-template');
+  const format = new Intl.NumberFormat('en-US');
 
   function parseObj(text) {
-    var positions = [];
-    var faces = [];
-    var lines = text.split('\n');
-    for (var i = 0; i < lines.length; i++) {
-      var raw = lines[i].trim();
-      if (!raw || raw.charAt(0) === '#') continue;
-      var t = raw.split(/\s+/);
-      if (t[0] === 'v') {
-        positions.push(parseFloat(t[1]), parseFloat(t[2]), parseFloat(t[3]));
-      } else if (t[0] === 'f') {
-        var idx = [];
-        for (var j = 1; j < t.length; j++) {
-          var v = parseInt(t[j].split('/')[0], 10);
-          if (!isNaN(v)) idx.push(v - 1);
-        }
-        if (idx.length >= 3) faces.push(idx);
+    const positions = [];
+    const faces = [];
+    for (const line of text.split('\n')) {
+      const tokens = line.split('#')[0].trim().split(/\s+/);
+      if (tokens[0] === 'v') {
+        const point = tokens.slice(1, 4).map(Number);
+        if (point.length !== 3 || !point.every(Number.isFinite)) throw new Error('Invalid vertex');
+        positions.push(new THREE.Vector3(...point));
       }
-    }
-    return { positions: positions, faces: faces };
-  }
-
-  function buildSurfaceGeometry(data) {
-    var tri = [];
-    for (var i = 0; i < data.faces.length; i++) {
-      var f = data.faces[i];
-      for (var j = 1; j < f.length - 1; j++) {
-        pushVertex(tri, data.positions, f[0]);
-        pushVertex(tri, data.positions, f[j]);
-        pushVertex(tri, data.positions, f[j + 1]);
-      }
-    }
-    var geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(tri, 3));
-    geo.computeVertexNormals();
-    return geo;
-  }
-
-  function pushVertex(out, positions, index) {
-    out.push(positions[index * 3], positions[index * 3 + 1], positions[index * 3 + 2]);
-  }
-
-  // Centers the geometry at the origin and scales its largest dimension to 2.
-  // Returns the transform so the wireframe can reuse exactly the same one.
-  function fitTransform(geo) {
-    geo.computeBoundingBox();
-    var box = geo.boundingBox;
-    var center = box.getCenter(new THREE.Vector3());
-    var size = box.getSize(new THREE.Vector3());
-    var s = 2 / (Math.max(size.x, size.y, size.z) || 1);
-    applyTransform(geo, center, s);
-    return { center: center, scale: s };
-  }
-
-  function applyTransform(geo, center, s) {
-    geo.translate(-center.x, -center.y, -center.z);
-    geo.scale(s, s, s);
-    geo.computeBoundingBox();
-    geo.computeBoundingSphere();
-  }
-
-  // Edge wireframe taken from the face loops: consecutive vertices of every
-  // face, de-duplicated, so quads stay quads.
-  function buildWireGeometry(data) {
-    var seen = Object.create(null);
-    var out = [];
-    for (var i = 0; i < data.faces.length; i++) {
-      var f = data.faces[i];
-      for (var j = 0; j < f.length; j++) {
-        var a = f[j];
-        var b = f[(j + 1) % f.length];
-        var k = a < b ? a + '_' + b : b + '_' + a;
-        if (seen[k]) continue;
-        seen[k] = true;
-        pushVertex(out, data.positions, a);
-        pushVertex(out, data.positions, b);
-      }
-    }
-    var geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(out, 3));
-    return geo;
-  }
-
-  /* ------------------------------------------------------------- rendering */
-
-  function clearGroup() {
-    if (surfaceMesh) {
-      group.remove(surfaceMesh);
-      surfaceMesh.geometry.dispose();
-      surfaceMesh = null;
-    }
-    if (wireMesh) {
-      group.remove(wireMesh);
-      wireMesh.geometry.dispose();
-      wireMesh = null;
-    }
-  }
-
-  function applyViewMode() {
-    if (surfaceMesh) surfaceMesh.visible = viewMode !== 'wireframe';
-    if (wireMesh) {
-      wireMesh.visible = viewMode !== 'shaded';
-      wireMat.color.set(viewMode === 'wireframe' ? 0x7de3bf : 0x50d2a2);
-      wireMat.opacity = viewMode === 'wireframe' ? 1 : 0.95;
-    }
-  }
-
-  function setStatus(text, isError) {
-    if (!statusEl) return;
-    statusEl.textContent = text;
-    statusEl.hidden = !text;
-    statusEl.classList.toggle('is-error', !!isError);
-  }
-
-  function updateStats(data) {
-    if (!statsHost) return;
-    var quads = 0;
-    var tris = 0;
-    var other = 0;
-    for (var i = 0; i < data.faces.length; i++) {
-      var n = data.faces[i].length;
-      if (n === 4) quads++;
-      else if (n === 3) tris++;
-      else other++;
-    }
-    var total = quads + tris + other;
-    var ratio = total ? (quads / total) * 100 : 0;
-    var rows = [
-      ['Vertices', data.positions.length / 3],
-      ['Faces', total],
-      ['Quads', quads],
-      ['Triangles', tris]
-    ];
-    if (other) rows.push(['N-gons', other]);
-    rows.push(['Quad ratio', ratio.toFixed(1) + '%']);
-
-    statsHost.innerHTML = rows
-      .map(function (r) {
-        return '<li>' + r[0] + '<small>' + formatNumber(r[1]) + '</small></li>';
-      })
-      .join('');
-  }
-
-  function formatNumber(n) {
-    return typeof n === 'number' ? n.toLocaleString('en-US') : String(n);
-  }
-
-  function loadModel(model) {
-    setStatus('Loading ' + model.label + '…');
-    fetch(model.url)
-      .then(function (res) {
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        return res.text();
-      })
-      .then(function (text) {
-        var data = parseObj(text);
-        if (!data.faces.length) throw new Error('No faces found');
-
-        var surfaceGeo = buildSurfaceGeometry(data);
-        var wireGeo = buildWireGeometry(data);
-        var t = fitTransform(surfaceGeo);
-        applyTransform(wireGeo, t.center, t.scale);
-
-        clearGroup();
-        surfaceMesh = new THREE.Mesh(surfaceGeo, surfaceMat);
-        wireMesh = new THREE.LineSegments(wireGeo, wireMat);
-        group.add(surfaceMesh);
-        group.add(wireMesh);
-
-        resetView();
-        applyViewMode();
-        updateStats(data);
-        if (nameEl) nameEl.textContent = model.label;
-        setStatus('');
-      })
-      .catch(function (err) {
-        setStatus('Failed to load ' + model.label + ' (' + err.message + ').', true);
-      });
-  }
-
-  function resetView() {
-    var radius = 1.4;
-    if (surfaceMesh) {
-      surfaceMesh.geometry.computeBoundingSphere();
-      radius = surfaceMesh.geometry.boundingSphere.radius || 1.4;
-    }
-    var dist = radius * 2.6;
-    camera.position.set(dist * 0.62, dist * 0.44, dist * 0.78);
-    camera.near = dist / 100;
-    camera.far = dist * 20;
-    camera.updateProjectionMatrix();
-    controls.target.set(0, 0, 0);
-    controls.update();
-  }
-
-  /* ------------------------------------------------------------------- ui */
-
-  function buildPills() {
-    if (!pillsHost) return;
-    pillsHost.innerHTML = MODELS.map(function (m, i) {
-      return (
-        '<button type="button" class="mesh-thumbnail" data-index="' + i + '"' +
-        ' aria-pressed="' + (i === 0) + '" title="' + m.label + '">' +
-        '<img src="static/3d_assets/thumbs/' + m.id + '.png" alt="' + m.label + '"' +
-        ' loading="lazy" decoding="async"></button>'
-      );
-    }).join('');
-    pillsHost.addEventListener('click', function (e) {
-      var btn = e.target.closest('.mesh-thumbnail');
-      if (!btn) return;
-      Array.prototype.forEach.call(pillsHost.children, function (c) {
-        c.setAttribute('aria-pressed', String(c === btn));
-      });
-      loadModel(MODELS[parseInt(btn.dataset.index, 10)]);
-    });
-  }
-
-  function bindModes() {
-    var inputs = document.querySelectorAll('input[name="quad-view-mode"]');
-    Array.prototype.forEach.call(inputs, function (input) {
-      input.addEventListener('change', function () {
-        if (!input.checked) return;
-        viewMode = input.value;
-        Array.prototype.forEach.call(inputs, function (other) {
-          var label = other.closest('label');
-          if (label) label.classList.toggle('is-selected', other === input);
+      if (tokens[0] === 'f') {
+        const indices = tokens.slice(1).map((token) => {
+          const index = Number(token.split('/')[0]);
+          return index < 0 ? positions.length + index : index - 1;
         });
-        applyViewMode();
+        if (indices.length < 3 || indices.some((index) => !Number.isInteger(index) || index < 0)) {
+          throw new Error('Invalid face');
+        }
+        faces.push(indices);
+      }
+    }
+    if (!faces.length || faces.some((face) => face.some((index) => index >= positions.length))) {
+      throw new Error('Missing or invalid faces');
+    }
+    return { positions, faces };
+  }
+
+  function triangulate(face, points) {
+    if (face.length === 3) return [[0, 1, 2]];
+    const normal = new THREE.Vector3();
+    const edge = new THREE.Vector3();
+    for (let i = 0; i < points.length; i++) {
+      normal.add(edge.crossVectors(points[i], points[(i + 1) % points.length]));
+    }
+    const [x, y, z] = normal.toArray().map(Math.abs);
+    const axis = x >= y && x >= z ? 'x' : y >= z ? 'y' : 'z';
+    const contour = points.map((p) => {
+      if (axis === 'x') return new THREE.Vector2(p.y, p.z);
+      if (axis === 'y') return new THREE.Vector2(p.z, p.x);
+      return new THREE.Vector2(p.x, p.y);
+    });
+    const direction = new THREE.Vector3();
+    const triangles = THREE.ShapeUtils.triangulateShape(contour, []);
+    for (const triangle of triangles) {
+      const [a, b, c] = triangle.map((index) => points[index]);
+      edge.subVectors(b, a).cross(direction.subVectors(c, a));
+      if (edge.dot(normal) < 0) [triangle[1], triangle[2]] = [triangle[2], triangle[1]];
+    }
+    return triangles;
+  }
+
+  function buildMeshes(data) {
+    const box = new THREE.Box3().setFromPoints(data.positions);
+    const center = box.getCenter(new THREE.Vector3());
+    const scale = 2 / Math.max(...box.getSize(new THREE.Vector3()).toArray());
+    if (!Number.isFinite(scale)) throw new Error('Empty mesh bounds');
+    const vertices = data.positions.map((p) => p.sub(center).multiplyScalar(scale));
+    const triangles = [];
+    const segments = [];
+    const seenEdges = new Set();
+    for (const face of data.faces) {
+      const points = face.map((i) => vertices[i]);
+      for (const triangle of triangulate(face, points)) {
+        for (const index of triangle) triangles.push(...points[index].toArray());
+      }
+      for (let i = 0; i < face.length; i++) {
+        const a = face[i];
+        const b = face[(i + 1) % face.length];
+        const edge = a < b ? a + '/' + b : b + '/' + a;
+        if (a === b || seenEdges.has(edge)) continue;
+        seenEdges.add(edge);
+        segments.push(...vertices[a].toArray(), ...vertices[b].toArray());
+      }
+    }
+    const geometry = (points) => new THREE.BufferGeometry()
+      .setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
+    const surface = geometry(triangles);
+    surface.computeVertexNormals();
+    surface.computeBoundingSphere();
+    return { surface, wire: geometry(segments) };
+  }
+
+  function setupViewport(canvas) {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, 1, .01, 100);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.domElement.className = 'quad-viewer-surface';
+    renderer.domElement.setAttribute('aria-hidden', 'true');
+    canvas.prepend(renderer.domElement);
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enablePan = false;
+    controls.autoRotateSpeed = 1;
+    const surfaceMaterial = new THREE.MeshStandardMaterial({
+      color: 0xc6d3ca, roughness: .69, metalness: .08, side: THREE.DoubleSide,
+      polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1
+    });
+    const backfaceMaterial = surfaceMaterial.clone();
+    backfaceMaterial.onBeforeCompile = (shader) => {
+      shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <color_fragment>',
+        '#include <color_fragment>\nif (!gl_FrontFacing) diffuseColor.rgb = vec3(.70, .09, .06);'
+      );
+    };
+    const wireMaterial = new THREE.LineBasicMaterial({ color: 0x24634f, transparent: true, opacity: .8 });
+    const group = new THREE.Group();
+    scene.add(group, new THREE.HemisphereLight(0xe8fff5, 0x36423c, .8));
+    const key = new THREE.DirectionalLight(0xfff6e9, .85);
+    const rim = new THREE.DirectionalLight(0xa5e9d4, .45);
+    key.position.set(5, 6, 5);
+    rim.position.set(-3, 1, -5);
+    scene.add(key, rim);
+
+    let surface;
+    let wire;
+    let radius = 1.4;
+    let frame = 0;
+    let visible = false;
+    let cameraPosition;
+    const render = () => renderer.render(scene, camera);
+    controls.addEventListener('change', render);
+
+    function tick() {
+      frame = 0;
+      if (!visible || !controls.autoRotate || document.hidden) return;
+      controls.update();
+      frame = requestAnimationFrame(tick);
+    }
+
+    function syncAnimation() {
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      if (visible && controls.autoRotate && !document.hidden) frame = requestAnimationFrame(tick);
+    }
+
+    function resetView() {
+      const vertical = THREE.MathUtils.degToRad(camera.fov / 2);
+      const horizontal = Math.atan(Math.tan(vertical) * camera.aspect);
+      const distance = radius / Math.sin(Math.min(vertical, horizontal)) * 1.09;
+      controls.minDistance = Math.max(radius * .5, .05);
+      controls.maxDistance = distance * 4;
+      camera.position.copy(new THREE.Vector3(...(cameraPosition || [.54, .36, 1])).normalize().multiplyScalar(distance));
+      controls.target.set(0, 0, 0);
+      controls.update();
+      render();
+    }
+
+    function resize() {
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      if (!width || !height) return;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height, false);
+      if (surface) resetView();
+    }
+
+    function clear() {
+      for (const mesh of group.children) mesh.geometry.dispose();
+      group.clear();
+      surface = wire = null;
+      render();
+    }
+
+    function setMode(mode) {
+      if (!surface) return;
+      surface.material.colorWrite = mode !== 'wireframe';
+      wire.visible = mode !== 'shaded';
+      wireMaterial.color.set(mode === 'wireframe' ? 0x9eeacf : 0x286653);
+      wireMaterial.opacity = mode === 'wireframe' ? .94 : .82;
+      render();
+    }
+
+    function show(data, item, reset) {
+      const meshes = buildMeshes(data);
+      clear();
+      surface = new THREE.Mesh(meshes.surface, item.highlightBackfaces ? backfaceMaterial : surfaceMaterial);
+      wire = new THREE.LineSegments(meshes.wire, wireMaterial);
+      wire.renderOrder = 1;
+      radius = meshes.surface.boundingSphere.radius || 1;
+      group.rotation.set(...(item.rotation || [0, 0, 0]));
+      cameraPosition = item.camera;
+      group.add(surface, wire);
+      if (reset) resetView();
+    }
+
+    canvas.addEventListener('keydown', (event) => {
+      if (event.target !== canvas || !surface) return;
+      const moves = {
+        ArrowLeft: [-.12, 0, 1], ArrowRight: [.12, 0, 1],
+        ArrowUp: [0, -.12, 1], ArrowDown: [0, .12, 1],
+        '+': [0, 0, .88], '=': [0, 0, .88], '-': [0, 0, 1.14]
+      };
+      const move = moves[event.key];
+      if (!move) return;
+      event.preventDefault();
+      const orbit = new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target));
+      orbit.theta += move[0];
+      orbit.phi += move[1];
+      orbit.radius = THREE.MathUtils.clamp(orbit.radius * move[2], controls.minDistance, controls.maxDistance);
+      camera.position.setFromSpherical(orbit.makeSafe()).add(controls.target);
+      controls.update();
+    });
+
+    new ResizeObserver(resize).observe(canvas);
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      syncAnimation();
+    }).observe(canvas);
+    document.addEventListener('visibilitychange', syncAnimation);
+    resize();
+    resetView();
+    return {
+      show, clear, setMode, resetView,
+      setRotation(enabled) { controls.autoRotate = enabled; syncAnimation(); }
+    };
+  }
+
+  function mountGallery(section, groups) {
+    section.append(template.content.cloneNode(true));
+    const select = (selector) => section.querySelector(selector);
+    const canvas = select('.viewer-canvas');
+    const poster = select('.viewer-poster');
+    const status = select('.viewer-status');
+    const title = select('[data-model-title]');
+    const normalNote = select('[data-normal-note]');
+    const loadButton = select('.load-viewer');
+    const filters = select('.case-filters');
+    const cases = select('.case-list');
+    const variants = select('.variant-picker');
+    const stats = select('.mesh-stats');
+    const rotate = select('[data-rotate]');
+    const modes = section.querySelectorAll('.view-modes input');
+    let viewport;
+    let selection;
+    let currentVariant;
+    let mode = 'both';
+    let pending;
+    let ready = false;
+
+    function announce(message) {
+      status.textContent = message;
+      status.hidden = !message;
+    }
+
+    function updateStats(data) {
+      let quads = 0, triangles = 0, ngons = 0;
+      for (const face of data.faces) {
+        if (face.length === 4) quads++;
+        else if (face.length === 3) triangles++;
+        else ngons++;
+      }
+      const rows = [['Vertices', data.positions.length], ['Faces', data.faces.length], ['Quads', quads], ['Triangles', triangles]];
+      if (ngons) rows.push(['N-gons', ngons]);
+      rows.push(['Quad ratio', (quads / data.faces.length * 100).toFixed(1) + '%']);
+      stats.replaceChildren(...rows.map(([label, value]) => {
+        const row = document.createElement('div');
+        const name = document.createElement('dt');
+        const count = document.createElement('dd');
+        name.textContent = label;
+        count.textContent = typeof value === 'number' ? format.format(value) : value;
+        row.append(name, count);
+        return row;
+      }));
+    }
+
+    async function loadModel(reset) {
+      pending?.abort();
+      if (!ready) return;
+      if (!viewport) {
+        try { viewport = setupViewport(canvas); }
+        catch {
+          announce('Interactive 3D requires WebGL. The preview is still available.');
+          return;
+        }
+      }
+      const controller = new AbortController();
+      pending = controller;
+      announce('Loading mesh…');
+      try {
+        const response = await fetch(assetRoot + currentVariant.file, { signal: controller.signal });
+        if (!response.ok) throw new Error('Mesh request failed');
+        const text = await response.text();
+        if (controller.signal.aborted) return;
+        const data = parseObj(text);
+        viewport.show(data, currentVariant, reset);
+        viewport.setMode(mode);
+        updateStats(data);
+        poster.hidden = true;
+        announce('');
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        announce('This mesh could not be loaded.');
+        loadButton.textContent = 'Retry';
+        loadButton.hidden = false;
+      }
+    }
+
+    function pickVariant(variant, reset) {
+      currentVariant = variant;
+      viewport?.clear();
+      stats.replaceChildren();
+      title.textContent = variant.label ? selection.name + ' · ' + variant.label : selection.name;
+      normalNote.hidden = !variant.highlightBackfaces || mode === 'wireframe';
+      poster.src = assetRoot + selection.thumb;
+      poster.hidden = false;
+      loadButton.hidden = ready;
+      loadButton.textContent = 'Load 3D model';
+      loadModel(reset);
+    }
+
+    function pickCase(item, button) {
+      selection = item;
+      for (const candidate of cases.children) candidate.setAttribute('aria-pressed', String(candidate === button));
+      const options = item.variants || [{ file: item.file, rotation: item.rotation, camera: item.camera }];
+      variants.hidden = options.length < 2;
+      variants.querySelector('div').replaceChildren(...options.map((variant, index) => {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        const caption = document.createElement('span');
+        input.type = 'radio';
+        input.name = section.dataset.gallery + '-version';
+        input.checked = index === 0;
+        caption.textContent = variant.label;
+        input.addEventListener('change', () => pickVariant(variant, false));
+        label.append(input, caption);
+        return label;
+      }));
+      pickVariant(options[0], true);
+    }
+
+    function browse(group, filter) {
+      for (const candidate of filters.children) candidate.setAttribute('aria-pressed', String(candidate === filter));
+      cases.replaceChildren(...group.cases.map((item) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'case-card';
+        const img = document.createElement('img');
+        img.src = assetRoot + item.thumb;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        button.append(img, item.name);
+        button.addEventListener('click', () => pickCase(item, button));
+        return button;
+      }));
+      cases.scrollTo(0, 0);
+      pickCase(group.cases[0], cases.firstElementChild);
+    }
+
+    for (const group of groups) {
+      const filter = document.createElement('button');
+      filter.type = 'button';
+      filter.textContent = group.label;
+      filter.addEventListener('click', () => browse(group, filter));
+      filters.append(filter);
+    }
+    filters.hidden = groups.length < 2;
+    for (const input of modes) {
+      input.name = section.dataset.gallery + '-mode';
+      input.addEventListener('change', () => {
+        mode = input.value;
+        normalNote.hidden = !currentVariant?.highlightBackfaces || mode === 'wireframe';
+        viewport?.setMode(mode);
       });
+    }
+    rotate.addEventListener('click', () => {
+      const enabled = rotate.getAttribute('aria-pressed') !== 'true';
+      rotate.setAttribute('aria-pressed', String(enabled));
+      viewport?.setRotation(enabled);
     });
+    select('[data-reset]').addEventListener('click', () => viewport?.resetView());
+
+    function activate() {
+      ready = true;
+      loadButton.hidden = true;
+      loadModel(true);
+    }
+    loadButton.addEventListener('click', activate);
+    browse(groups[0], filters.firstElementChild);
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      if (!ready) activate();
+    }, { rootMargin: '120px' });
+    observer.observe(canvas);
   }
 
-  function bindAutoRotate() {
-    var btn = document.getElementById('quad-autorotate');
-    if (!btn) return;
-    btn.addEventListener('click', function () {
-      controls.autoRotate = !controls.autoRotate;
-      btn.setAttribute('aria-pressed', String(controls.autoRotate));
-    });
-  }
-
-  function resize() {
-    var w = host.clientWidth || 1;
-    var h = host.clientHeight || 1;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-  }
-
-  if (window.ResizeObserver) {
-    new ResizeObserver(resize).observe(host);
-  }
-  window.addEventListener('resize', resize);
-
-  (function animate() {
-    requestAnimationFrame(animate);
-    controls.update();
-    renderer.render(scene, camera);
+  (async () => {
+    const sections = [...document.querySelectorAll('[data-gallery]')];
+    try {
+      const response = await fetch(assetRoot + 'cases.json');
+      if (!response.ok) throw new Error('Gallery manifest unavailable');
+      const groups = await response.json();
+      for (const section of sections) mountGallery(section, groups[section.dataset.gallery]);
+    } catch (error) {
+      for (const section of sections) section.textContent = 'The 3D gallery is temporarily unavailable.';
+      console.error(error);
+    }
   })();
-
-  buildPills();
-  bindModes();
-  bindAutoRotate();
-  resize();
-  loadModel(MODELS[0]);
 })();

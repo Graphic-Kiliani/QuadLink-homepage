@@ -1,0 +1,1133 @@
+{
+  "results": [
+    {
+      "label": "Teaser",
+      "cases": [
+        {
+          "name": "Robotic Arm",
+          "thumb": "thumbs/robotic-arm.webp",
+          "file": "results/robotic-arm.obj"
+        },
+        {
+          "name": "Utility Truck",
+          "thumb": "thumbs/utility-truck.webp",
+          "file": "results/utility-truck.obj"
+        },
+        {
+          "name": "Spiked Brawler",
+          "thumb": "thumbs/spiked-brawler.webp",
+          "file": "results/spiked-brawler.obj"
+        },
+        {
+          "name": "Mascot Guardian",
+          "thumb": "thumbs/mascot-guardian.webp",
+          "file": "results/mascot-guardian.obj"
+        },
+        {
+          "name": "Orbital Drone",
+          "thumb": "thumbs/orbital-drone.webp",
+          "file": "results/orbital-drone.obj"
+        },
+        {
+          "name": "Ornamental Blade",
+          "thumb": "thumbs/ornamental-blade.webp",
+          "file": "results/ornamental-blade.obj"
+        },
+        {
+          "name": "Pendant",
+          "thumb": "thumbs/pendant.webp",
+          "file": "results/pendant.obj"
+        },
+        {
+          "name": "Mechanical Tool",
+          "thumb": "thumbs/mechanical-tool.webp",
+          "file": "results/mechanical-tool.obj"
+        },
+        {
+          "name": "Curved Link",
+          "thumb": "thumbs/curved-link.webp",
+          "file": "results/curved-link.obj"
+        },
+        {
+          "name": "Tire",
+          "thumb": "thumbs/tire.webp",
+          "file": "results/tire.obj"
+        },
+        {
+          "name": "Court Costume",
+          "thumb": "thumbs/court-costume.webp",
+          "file": "results/court-costume.obj"
+        },
+        {
+          "name": "Slim Character",
+          "thumb": "thumbs/slim-character.webp",
+          "file": "results/slim-character.obj"
+        },
+        {
+          "name": "Crew Character",
+          "thumb": "thumbs/crew-character.webp",
+          "file": "results/crew-character.obj"
+        },
+        {
+          "name": "Combat Costume",
+          "thumb": "thumbs/combat-costume.webp",
+          "file": "results/combat-costume.obj"
+        },
+        {
+          "name": "Bob-Hair Character",
+          "thumb": "thumbs/bob-hair.webp",
+          "file": "results/bob-hair.obj"
+        },
+        {
+          "name": "Braided Character",
+          "thumb": "thumbs/braided-character.webp",
+          "file": "results/braided-character.obj"
+        },
+        {
+          "name": "Costumed Figure",
+          "thumb": "thumbs/costumed-figure.webp",
+          "file": "results/costumed-figure.obj"
+        },
+        {
+          "name": "Jagged Armor",
+          "thumb": "thumbs/jagged-armor.webp",
+          "file": "results/jagged-armor.obj"
+        },
+        {
+          "name": "Jagged Armor Variant",
+          "thumb": "thumbs/jagged-armor-alt.webp",
+          "file": "results/jagged-armor-alt.obj"
+        },
+        {
+          "name": "Armored Cavalier",
+          "thumb": "thumbs/armored-cavalier.webp",
+          "file": "results/armored-cavalier.obj"
+        },
+        {
+          "name": "Snail",
+          "thumb": "thumbs/snail.webp",
+          "file": "results/snail.obj"
+        },
+        {
+          "name": "Domed Shell",
+          "thumb": "thumbs/domed-shell.webp",
+          "file": "results/domed-shell.obj"
+        },
+        {
+          "name": "Winged Mascot",
+          "thumb": "thumbs/winged-mascot.webp",
+          "file": "results/winged-mascot.obj"
+        },
+        {
+          "name": "Layered Armor",
+          "thumb": "thumbs/layered-armor.webp",
+          "file": "results/layered-armor.obj"
+        },
+        {
+          "name": "Spearfighter",
+          "thumb": "thumbs/spearfighter.webp",
+          "file": "results/spearfighter.obj"
+        },
+        {
+          "name": "Winged Bird",
+          "thumb": "thumbs/winged-bird.webp",
+          "file": "results/winged-bird.obj"
+        },
+        {
+          "name": "Air Speeder",
+          "thumb": "thumbs/air-speeder.webp",
+          "file": "results/air-speeder.obj"
+        },
+        {
+          "name": "Racing Craft",
+          "thumb": "thumbs/racing-craft.webp",
+          "file": "results/racing-craft.obj"
+        },
+        {
+          "name": "Sports Car",
+          "thumb": "thumbs/sports-car.webp",
+          "file": "results/sports-car.obj"
+        },
+        {
+          "name": "Long Prop",
+          "thumb": "thumbs/long-prop.webp",
+          "file": "results/long-prop.obj"
+        },
+        {
+          "name": "Hanging Ornament",
+          "thumb": "thumbs/hanging-ornament.webp",
+          "file": "results/hanging-ornament.obj"
+        },
+        {
+          "name": "Platform Heel",
+          "thumb": "thumbs/platform-heel.webp",
+          "file": "results/platform-heel.obj"
+        },
+        {
+          "name": "Long Sword",
+          "thumb": "thumbs/long-sword.webp",
+          "file": "results/long-sword.obj"
+        },
+        {
+          "name": "Short Sword",
+          "thumb": "thumbs/short-sword.webp",
+          "file": "results/short-sword.obj"
+        }
+      ]
+    },
+    {
+      "label": "Paper Comparisons",
+      "cases": [
+        {
+          "name": "Braided Character",
+          "thumb": "thumbs/paper-braided.webp",
+          "variants": [
+            {
+              "file": "results/braided-character.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/paper-braided-input-mesh.obj",
+              "label": "Input mesh"
+            }
+          ]
+        },
+        {
+          "name": "Armored Squire",
+          "thumb": "thumbs/paper-squire.webp",
+          "variants": [
+            {
+              "file": "results/paper-squire-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/paper-squire-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "results/paper-squire-bpt.obj",
+              "label": "BPT"
+            },
+            {
+              "file": "results/paper-squire-deepmesh.obj",
+              "label": "DeepMesh"
+            },
+            {
+              "file": "results/paper-squire-fastmesh.obj",
+              "label": "FastMesh"
+            }
+          ]
+        },
+        {
+          "name": "Spiked Guardian",
+          "thumb": "thumbs/paper-guardian.webp",
+          "variants": [
+            {
+              "file": "results/paper-guardian-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/paper-guardian-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "results/paper-guardian-bpt.obj",
+              "label": "BPT"
+            },
+            {
+              "file": "results/paper-guardian-deepmesh.obj",
+              "label": "DeepMesh"
+            },
+            {
+              "file": "results/paper-guardian-fastmesh.obj",
+              "label": "FastMesh"
+            }
+          ]
+        },
+        {
+          "name": "Turbine Housing",
+          "thumb": "thumbs/paper-turbine.webp",
+          "variants": [
+            {
+              "file": "results/paper-turbine-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/paper-turbine-bpt.obj",
+              "label": "BPT"
+            },
+            {
+              "file": "results/paper-turbine-deepmesh.obj",
+              "label": "DeepMesh"
+            },
+            {
+              "file": "results/paper-turbine-fastmesh.obj",
+              "label": "FastMesh"
+            }
+          ]
+        },
+        {
+          "name": "Race Car",
+          "thumb": "thumbs/paper-race-car.webp",
+          "variants": [
+            {
+              "file": "results/paper-race-car-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/paper-race-car-bpt.obj",
+              "label": "BPT"
+            },
+            {
+              "file": "results/paper-race-car-deepmesh.obj",
+              "label": "DeepMesh"
+            },
+            {
+              "file": "results/paper-race-car-fastmesh.obj",
+              "label": "FastMesh"
+            }
+          ]
+        },
+        {
+          "name": "Roller Skate",
+          "thumb": "thumbs/paper-skate.webp",
+          "variants": [
+            {
+              "file": "results/paper-skate-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/paper-skate-bpt.obj",
+              "label": "BPT"
+            },
+            {
+              "file": "results/paper-skate-deepmesh.obj",
+              "label": "DeepMesh"
+            },
+            {
+              "file": "results/paper-skate-fastmesh.obj",
+              "label": "FastMesh"
+            }
+          ]
+        },
+        {
+          "name": "Spiked Shell",
+          "thumb": "thumbs/paper-shell.webp",
+          "variants": [
+            {
+              "file": "results/paper-shell-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/paper-shell-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "results/paper-shell-bpt.obj",
+              "label": "BPT"
+            },
+            {
+              "file": "results/paper-shell-deepmesh.obj",
+              "label": "DeepMesh"
+            },
+            {
+              "file": "results/paper-shell-fastmesh.obj",
+              "label": "FastMesh"
+            },
+            {
+              "file": "results/paper-shell-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "results/paper-shell-meshanything-v2.obj",
+              "label": "MeshAnything V2"
+            }
+          ]
+        },
+        {
+          "name": "Leaf Sprite",
+          "thumb": "thumbs/paper-leaf.webp",
+          "variants": [
+            {
+              "file": "results/paper-leaf-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/paper-leaf-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "results/paper-leaf-bpt.obj",
+              "label": "BPT"
+            },
+            {
+              "file": "results/paper-leaf-deepmesh.obj",
+              "label": "DeepMesh"
+            },
+            {
+              "file": "results/paper-leaf-fastmesh.obj",
+              "label": "FastMesh"
+            },
+            {
+              "file": "results/paper-leaf-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "results/paper-leaf-meshanything-v2.obj",
+              "label": "MeshAnything V2"
+            }
+          ]
+        },
+        {
+          "name": "Horned Knight",
+          "thumb": "thumbs/paper-knight.webp",
+          "variants": [
+            {
+              "file": "results/paper-knight-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/paper-knight-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "results/paper-knight-bpt.obj",
+              "label": "BPT"
+            },
+            {
+              "file": "results/paper-knight-deepmesh.obj",
+              "label": "DeepMesh"
+            },
+            {
+              "file": "results/paper-knight-fastmesh.obj",
+              "label": "FastMesh"
+            },
+            {
+              "file": "results/paper-knight-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "results/paper-leaf-meshanything-v2.obj",
+              "label": "MeshAnything V2"
+            }
+          ]
+        },
+        {
+          "name": "Round-Hair Character",
+          "thumb": "thumbs/paper-round-hair.webp",
+          "variants": [
+            {
+              "file": "results/paper-round-hair-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/paper-round-hair-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "results/paper-round-hair-bpt.obj",
+              "label": "BPT"
+            },
+            {
+              "file": "results/paper-round-hair-deepmesh.obj",
+              "label": "DeepMesh"
+            },
+            {
+              "file": "results/paper-round-hair-fastmesh.obj",
+              "label": "FastMesh"
+            },
+            {
+              "file": "results/paper-round-hair-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "results/paper-round-hair-meshanything-v2.obj",
+              "label": "MeshAnything V2"
+            }
+          ]
+        },
+        {
+          "name": "Cap Character",
+          "thumb": "thumbs/paper-cap.webp",
+          "variants": [
+            {
+              "file": "results/paper-cap-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/paper-cap-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "results/paper-cap-bpt.obj",
+              "label": "BPT"
+            },
+            {
+              "file": "results/paper-cap-deepmesh.obj",
+              "label": "DeepMesh"
+            },
+            {
+              "file": "results/paper-cap-fastmesh.obj",
+              "label": "FastMesh"
+            },
+            {
+              "file": "results/paper-cap-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "results/paper-cap-meshanything-v2.obj",
+              "label": "MeshAnything V2"
+            }
+          ]
+        },
+        {
+          "name": "Armored Soldier",
+          "thumb": "thumbs/field-soldier.webp",
+          "variants": [
+            {
+              "file": "results/field-soldier-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/field-soldier-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "results/field-soldier-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "results/field-soldier-quadriflow.obj",
+              "label": "QuadriFlow"
+            }
+          ]
+        },
+        {
+          "name": "Armored Squire",
+          "thumb": "thumbs/field-squire.webp",
+          "variants": [
+            {
+              "file": "results/field-squire-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/field-squire-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "results/field-squire-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "results/field-squire-quadriflow.obj",
+              "label": "QuadriFlow"
+            }
+          ]
+        },
+        {
+          "name": "Spiked Brawler",
+          "thumb": "thumbs/field-brawler.webp",
+          "variants": [
+            {
+              "file": "results/field-brawler-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/field-brawler-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "results/field-brawler-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "results/field-brawler-quadriflow.obj",
+              "label": "QuadriFlow"
+            }
+          ]
+        },
+        {
+          "name": "Long Mechanical Prop",
+          "thumb": "thumbs/native-quad-comparison.webp",
+          "variants": [
+            {
+              "file": "results/native-quad-comparison-quadlink.obj",
+              "label": "QuadLink"
+            },
+            {
+              "file": "results/native-quad-comparison-quadgpt.obj",
+              "label": "QuadGPT"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Polygonal Meshes",
+      "cases": [
+        {
+          "name": "Goldberg (1, 1)",
+          "thumb": "thumbs/goldberg-32.webp",
+          "file": "results/goldberg-32.obj"
+        },
+        {
+          "name": "Goldberg (3, 0)",
+          "thumb": "thumbs/goldberg-92.webp",
+          "file": "results/goldberg-92.obj"
+        },
+        {
+          "name": "Goldberg (4, 2)",
+          "thumb": "thumbs/goldberg-282.webp",
+          "file": "results/goldberg-282.obj"
+        }
+      ]
+    },
+    {
+      "label": "Face Assembly",
+      "cases": [
+        {
+          "name": "Seahorse",
+          "thumb": "thumbs/assembly-seahorse.webp",
+          "variants": [
+            {
+              "file": "results/assembly-seahorse-latent-full.obj",
+              "label": "Latent · Full"
+            },
+            {
+              "file": "results/assembly-seahorse-latent-no-geometry.obj",
+              "label": "Latent · No geometry"
+            },
+            {
+              "file": "results/assembly-seahorse-latent-no-centroid-check.obj",
+              "label": "Latent · No centroid check"
+            },
+            {
+              "file": "results/assembly-seahorse-euclidean-full.obj",
+              "label": "Euclidean · Full"
+            },
+            {
+              "file": "results/assembly-seahorse-euclidean-no-geometry.obj",
+              "label": "Euclidean · No geometry"
+            },
+            {
+              "file": "results/assembly-seahorse-euclidean-no-centroid-check.obj",
+              "label": "Euclidean · No centroid check"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Applications",
+      "cases": [
+        {
+          "name": "Engine",
+          "thumb": "thumbs/engine.webp",
+          "variants": [
+            {
+              "file": "results/engine-artist-quad.obj",
+              "label": "Artist quad"
+            },
+            {
+              "file": "results/engine-artist-triangle.obj",
+              "label": "Artist triangle"
+            },
+            {
+              "file": "results/engine-delaunay.obj",
+              "label": "Delaunay"
+            },
+            {
+              "file": "results/engine-quad-remesher.obj",
+              "label": "Quad Remesher"
+            }
+          ]
+        },
+        {
+          "name": "Pendant",
+          "thumb": "thumbs/application-pendant.webp",
+          "variants": [
+            {
+              "file": "results/application-pendant-quad-dominant.obj",
+              "label": "Quad-dominant"
+            },
+            {
+              "file": "results/application-pendant-triangle.obj",
+              "label": "Triangle"
+            },
+            {
+              "file": "results/application-pendant-edited-quad.obj",
+              "label": "Edited quad"
+            },
+            {
+              "file": "results/application-pendant-edited-triangle.obj",
+              "label": "Edited triangle"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Original Gallery",
+      "cases": [
+        {
+          "name": "Turbine Housing",
+          "thumb": "thumbs/original-1.webp",
+          "file": "1.obj"
+        },
+        {
+          "name": "Race Car",
+          "thumb": "thumbs/original-2.webp",
+          "file": "2.obj"
+        },
+        {
+          "name": "Roller Skate",
+          "thumb": "thumbs/original-3.webp",
+          "file": "3.obj"
+        },
+        {
+          "name": "Spiked Guardian",
+          "thumb": "thumbs/original-4.webp",
+          "file": "4.obj"
+        },
+        {
+          "name": "Spiked Shell",
+          "thumb": "thumbs/original-5.webp",
+          "file": "5.obj"
+        },
+        {
+          "name": "Armored Squire",
+          "thumb": "thumbs/original-6.webp",
+          "file": "6.obj"
+        },
+        {
+          "name": "Horned Knight",
+          "thumb": "thumbs/original-7.webp",
+          "file": "7.obj"
+        },
+        {
+          "name": "Ponytail Character",
+          "thumb": "thumbs/original-8.webp",
+          "file": "8.obj"
+        },
+        {
+          "name": "Cap Character",
+          "thumb": "thumbs/original-9.webp",
+          "file": "9.obj"
+        },
+        {
+          "name": "Armored Soldier",
+          "thumb": "thumbs/original-10.webp",
+          "file": "10.obj"
+        },
+        {
+          "name": "Seahorse",
+          "thumb": "thumbs/original-11.webp",
+          "file": "11.obj"
+        }
+      ]
+    }
+  ],
+  "curation": [
+    {
+      "label": "Merge Selection",
+      "cases": [
+        {
+          "name": "Bull Demon",
+          "thumb": "thumbs/bull-demon-merge.webp",
+          "variants": [
+            {
+              "file": "curation/bull-demon-merge-global.obj",
+              "label": "Global"
+            },
+            {
+              "file": "curation/bull-demon-merge-triangle-input.obj",
+              "label": "Triangle input"
+            },
+            {
+              "file": "curation/bull-demon-merge-blossom-quad.obj",
+              "label": "Blossom-Quad"
+            },
+            {
+              "file": "curation/bull-demon-merge-greedy.obj",
+              "label": "Greedy"
+            }
+          ]
+        },
+        {
+          "name": "Operator Ablation",
+          "thumb": "thumbs/operator-ablation.webp",
+          "variants": [
+            {
+              "file": "curation/operator-ablation-full-operator.obj",
+              "label": "Full operator"
+            },
+            {
+              "file": "curation/operator-ablation-ground-truth.obj",
+              "label": "Ground truth"
+            },
+            {
+              "file": "curation/operator-ablation-angle-term.obj",
+              "label": "Angle term"
+            },
+            {
+              "file": "curation/operator-ablation-alignment-term.obj",
+              "label": "Alignment term"
+            },
+            {
+              "file": "curation/operator-ablation-no-prefilter.obj",
+              "label": "No prefilter"
+            },
+            {
+              "file": "curation/operator-ablation-angle-no-prefilter.obj",
+              "label": "Angle, no prefilter"
+            },
+            {
+              "file": "curation/operator-ablation-alignment-no-prefilter.obj",
+              "label": "Alignment, no prefilter"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "UV and Symmetry",
+      "cases": [
+        {
+          "name": "Column",
+          "thumb": "thumbs/uv-column.webp",
+          "variants": [
+            {
+              "file": "curation/uv-column-uv-seams-protected.obj",
+              "label": "UV seams protected"
+            },
+            {
+              "file": "curation/uv-column-triangle-input.obj",
+              "label": "Triangle input"
+            },
+            {
+              "file": "curation/uv-column-without-seam-protection.obj",
+              "label": "Without seam protection"
+            }
+          ]
+        },
+        {
+          "name": "Symmetric Character",
+          "thumb": "thumbs/symmetry-character.webp",
+          "variants": [
+            {
+              "file": "curation/symmetry-character-symmetry-protected.obj",
+              "label": "Symmetry protected"
+            },
+            {
+              "file": "curation/symmetry-character-symmetry-protected.obj",
+              "label": "Without symmetry protection"
+            },
+            {
+              "file": "curation/symmetry-character-triangle-input.obj",
+              "label": "Triangle input"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Normal Consistency",
+      "cases": [
+        {
+          "name": "Bull Demon",
+          "thumb": "thumbs/normals-bull.webp",
+          "variants": [
+            {
+              "file": "curation/bull-demon-merge-global.obj",
+              "label": "With enforcement",
+              "highlightBackfaces": true
+            },
+            {
+              "file": "curation/bull-demon-merge-triangle-input.obj",
+              "label": "Without enforcement",
+              "highlightBackfaces": true
+            },
+            {
+              "file": "curation/bull-demon-merge-triangle-input.obj",
+              "label": "Input mesh"
+            }
+          ]
+        },
+        {
+          "name": "Armored Guard",
+          "thumb": "thumbs/normals-guard.webp",
+          "variants": [
+            {
+              "file": "curation/normals-guard-with-enforcement.obj",
+              "label": "With enforcement",
+              "highlightBackfaces": true
+            },
+            {
+              "file": "curation/normals-guard-without-enforcement.obj",
+              "label": "Without enforcement",
+              "highlightBackfaces": true
+            },
+            {
+              "file": "curation/normals-guard-input-mesh.obj",
+              "label": "Input mesh"
+            }
+          ]
+        },
+        {
+          "name": "Spiked Warrior",
+          "thumb": "thumbs/normals-warrior.webp",
+          "variants": [
+            {
+              "file": "curation/normals-warrior-with-enforcement.obj",
+              "label": "With enforcement",
+              "highlightBackfaces": true
+            },
+            {
+              "file": "curation/normals-warrior-without-enforcement.obj",
+              "label": "Without enforcement",
+              "highlightBackfaces": true
+            },
+            {
+              "file": "curation/normals-warrior-input-mesh.obj",
+              "label": "Input mesh"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Software Comparison",
+      "cases": [
+        {
+          "name": "Finned Warrior",
+          "thumb": "thumbs/software-finned.webp",
+          "variants": [
+            {
+              "file": "curation/software-finned-triangle-input.obj",
+              "label": "Triangle input"
+            },
+            {
+              "file": "curation/software-finned-greedy.obj",
+              "label": "Greedy"
+            },
+            {
+              "file": "curation/software-finned-pymeshlab.obj",
+              "label": "PyMeshLab"
+            }
+          ]
+        },
+        {
+          "name": "Ring Warrior",
+          "thumb": "thumbs/software-ring.webp",
+          "variants": [
+            {
+              "file": "curation/software-ring-triangle-input.obj",
+              "label": "Triangle input"
+            },
+            {
+              "file": "curation/software-ring-greedy.obj",
+              "label": "Greedy"
+            },
+            {
+              "file": "curation/software-ring-pymeshlab.obj",
+              "label": "PyMeshLab"
+            }
+          ]
+        },
+        {
+          "name": "Character with Dress",
+          "thumb": "thumbs/software-dress.webp",
+          "variants": [
+            {
+              "file": "curation/software-dress-triangle-input.obj",
+              "label": "Triangle input"
+            },
+            {
+              "file": "curation/software-dress-greedy.obj",
+              "label": "Greedy"
+            },
+            {
+              "file": "curation/software-dress-pymeshlab.obj",
+              "label": "PyMeshLab"
+            }
+          ]
+        },
+        {
+          "name": "Armored Figure",
+          "thumb": "thumbs/software-armored.webp",
+          "variants": [
+            {
+              "file": "curation/software-armored-triangle-input.obj",
+              "label": "Triangle input"
+            },
+            {
+              "file": "curation/software-armored-greedy.obj",
+              "label": "Greedy"
+            },
+            {
+              "file": "curation/software-armored-pymeshlab.obj",
+              "label": "PyMeshLab"
+            }
+          ]
+        },
+        {
+          "name": "Piano",
+          "thumb": "thumbs/software-piano.webp",
+          "variants": [
+            {
+              "file": "curation/software-piano-triangle-input.obj",
+              "label": "Triangle input"
+            },
+            {
+              "file": "curation/software-piano-greedy.obj",
+              "label": "Greedy"
+            },
+            {
+              "file": "curation/software-piano-pymeshlab.obj",
+              "label": "PyMeshLab"
+            }
+          ]
+        },
+        {
+          "name": "Spear",
+          "thumb": "thumbs/software-spear.webp",
+          "variants": [
+            {
+              "file": "curation/software-spear-triangle-input.obj",
+              "label": "Triangle input"
+            },
+            {
+              "file": "curation/software-spear-greedy.obj",
+              "label": "Greedy"
+            },
+            {
+              "file": "curation/software-spear-pymeshlab.obj",
+              "label": "PyMeshLab"
+            }
+          ]
+        },
+        {
+          "name": "Coffee Pot",
+          "thumb": "thumbs/software-pot.webp",
+          "variants": [
+            {
+              "file": "curation/software-pot-triangle-input.obj",
+              "label": "Triangle input"
+            },
+            {
+              "file": "curation/software-pot-greedy.obj",
+              "label": "Greedy"
+            },
+            {
+              "file": "curation/software-pot-pymeshlab.obj",
+              "label": "PyMeshLab"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Field-Aligned Remeshing",
+      "cases": [
+        {
+          "name": "Character with Dress",
+          "thumb": "thumbs/remesh-yunjin.webp",
+          "variants": [
+            {
+              "file": "curation/remesh-yunjin-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "curation/remesh-yunjin-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "curation/remesh-yunjin-qremeshify.obj",
+              "label": "QRemeshify"
+            },
+            {
+              "file": "curation/remesh-yunjin-quad-remesher.obj",
+              "label": "Quad Remesher"
+            }
+          ]
+        },
+        {
+          "name": "Table",
+          "thumb": "thumbs/remesh-table1.webp",
+          "variants": [
+            {
+              "file": "curation/remesh-table1-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "curation/remesh-table1-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "curation/remesh-table1-qremeshify.obj",
+              "label": "QRemeshify"
+            },
+            {
+              "file": "curation/remesh-table1-quad-remesher.obj",
+              "label": "Quad Remesher"
+            }
+          ]
+        },
+        {
+          "name": "Hard-Surface Prop",
+          "thumb": "thumbs/remesh-gun.webp",
+          "variants": [
+            {
+              "file": "curation/remesh-gun-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "curation/remesh-gun-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "curation/remesh-gun-qremeshify.obj",
+              "label": "QRemeshify"
+            },
+            {
+              "file": "curation/remesh-gun-quad-remesher.obj",
+              "label": "Quad Remesher"
+            }
+          ]
+        },
+        {
+          "name": "Long Prop",
+          "thumb": "thumbs/remesh-gun2.webp",
+          "variants": [
+            {
+              "file": "curation/remesh-gun2-input-mesh.obj",
+              "label": "Input mesh"
+            },
+            {
+              "file": "curation/remesh-gun2-instant-meshes.obj",
+              "label": "Instant Meshes"
+            },
+            {
+              "file": "curation/remesh-gun2-qremeshify.obj",
+              "label": "QRemeshify"
+            },
+            {
+              "file": "curation/remesh-gun2-quad-remesher.obj",
+              "label": "Quad Remesher"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Edge Flow",
+      "cases": [
+        {
+          "name": "Feature-Line Example",
+          "thumb": "thumbs/edge-flow.webp",
+          "file": "curation/edge-flow.obj"
+        }
+      ]
+    }
+  ]
+}
