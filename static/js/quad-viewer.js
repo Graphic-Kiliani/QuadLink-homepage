@@ -367,7 +367,7 @@
   (async () => {
     const sections = [...document.querySelectorAll('[data-gallery]')];
     try {
-      const response = await fetch(assetRoot + 'cases.json?v=20261121-paper');
+      const response = await fetch(assetRoot + 'cases.json?v=20261121-figures');
       if (!response.ok) throw new Error('Gallery manifest unavailable');
       const groups = await response.json();
       for (const section of sections) mountGallery(section, groups[section.dataset.gallery]);

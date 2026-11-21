@@ -6,10 +6,11 @@
   <meta name="description" content="QuadLink generates quad-dominant meshes from point clouds. Explore the paper's meshes and Tri-to-Quad results in 3D.">
   <title>QuadLink · Autoregressive Quad-Dominant Mesh Generation</title>
   <link rel="stylesheet" href="static/css/fonts.css">
-  <link rel="stylesheet" href="static/css/index.css?v=20261121-paper">
+  <link rel="stylesheet" href="static/css/index.css?v=20261121-figures">
   <script defer src="static/js/vendor/three.min.js"></script>
   <script defer src="static/js/vendor/OrbitControls.js"></script>
-  <script defer src="static/js/quad-viewer.js?v=20261121-paper"></script>
+  <script defer src="static/js/quad-viewer.js?v=20261121-figures"></script>
+  <script defer src="static/js/method-overview.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -29,7 +30,7 @@
   <section class="hero site-shell" aria-labelledby="project-title">
     <div class="hero-grid">
       <div class="hero-copy">
-        <h1 id="project-title"><span class="quad-wordmark">QuadLink</span></h1>
+        <h1 id="project-title"><img src="static/images/quadlink-wordmark.webp" width="1600" height="360" alt="QuadLink" fetchpriority="high"></h1>
         <p class="subtitle">Autoregressive Quad-Dominant Mesh Generation via Point-Relation Learning</p>
         <div class="hero-links">
           <a class="button primary" href="#results">Explore the meshes</a>
@@ -94,20 +95,31 @@
       <h2 id="method-title">Method Overview</h2>
       <p>QuadLink reconstructs polygonal surfaces from point clouds in three stages.</p>
     </div>
-    <figure class="method-figure">
-      <img src="static/images/overview_v4.png" loading="lazy" decoding="async" alt="QuadLink pipeline from point cloud input through anchor prediction, link modeling and face assembly">
-    </figure>
-    <ol class="method-stages">
-      <li><h3>Anchor Prediction</h3><p>Predict vertices and face centroids using axis-aware coordinate tokenization.</p></li>
-      <li><h3>Link Modeling</h3><p>Learn which vertices belong to each face using centroid-conditioned links.</p></li>
-      <li><h3>Face Assembly</h3><p>Assemble quads first using geometric verification, with triangle fallback.</p></li>
+    <ol class="method-stages" aria-label="QuadLink method stages">
+      <li>
+        <img src="static/images/method-anchor.webp" width="1583" height="752" loading="lazy" decoding="async"
+             alt="Stage I. Anchor prediction with a point cloud encoder and hourglass transformers.">
+        <p>Encode the input point cloud and predict a token sequence of vertices and face centroids.</p>
+      </li>
+      <li>
+        <img src="static/images/method-link.webp" width="942" height="752" loading="lazy" decoding="async"
+             alt="Stage II. Link modeling in the latent space.">
+        <p>Learn centroid-to-vertex links that group vertices into candidate faces.</p>
+      </li>
+      <li>
+        <img src="static/images/method-assembly.webp" width="799" height="752" loading="lazy" decoding="async"
+             alt="Stage III. Face assembly with geometry prefiltering and centroid tolerance.">
+        <p>Validate candidate faces and assemble quads first, with triangle fallback.</p>
+      </li>
     </ol>
     <details class="intro-details">
       <summary>Why quad-dominant meshes?</summary>
       <p>Artist-designed quad-dominant meshes support editable edge flow and preserve triangles where complex topology requires them.</p>
       <div>
-        <img src="static/images/intro_artist_geometry_v3.jpg" loading="lazy" decoding="async" alt="Artist-designed geometry compared with triangle and field-aligned remeshing">
-        <img src="static/images/intro_application_v2.png" loading="lazy" decoding="async" alt="Quad-dominant mesh applications in texture, modeling, and editing">
+        <img src="static/images/intro-application-v3.webp" width="2211" height="820" loading="lazy" decoding="async"
+             alt="Triangle and quad-dominant meshes compared across UV unwrapping, beveling, subdivision, edge flow, and edge splitting.">
+        <img src="static/images/intro-artist-geometry-v5.webp" width="1500" height="1077" loading="lazy" decoding="async"
+             alt="The same shape in pure quad, dense triangle, QuadLink quad-dominant, and sparse triangle layouts.">
       </div>
     </details>
   </section>
