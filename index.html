@@ -6,10 +6,10 @@
   <meta name="description" content="QuadLink generates quad-dominant meshes from point clouds. Explore the paper's meshes and Tri-to-Quad results in 3D.">
   <title>QuadLink · Autoregressive Quad-Dominant Mesh Generation</title>
   <link rel="stylesheet" href="static/css/fonts.css">
-  <link rel="stylesheet" href="static/css/index.css?v=20261121">
+  <link rel="stylesheet" href="static/css/index.css?v=20261121-categories">
   <script defer src="static/js/vendor/three.min.js"></script>
   <script defer src="static/js/vendor/OrbitControls.js"></script>
-  <script defer src="static/js/quad-viewer.js?v=20261121"></script>
+  <script defer src="static/js/quad-viewer.js?v=20261121-categories"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -36,9 +36,11 @@
           <a class="button secondary" href="https://github.com/Graphic-Kiliani/QuadLink">GitHub</a>
         </div>
       </div>
-      <figure class="hero-figure">
-        <img src="static/images/quadlink_teaser.jpg" width="2048" height="1025" alt="Quad-dominant meshes with visible edge flow across mechanical and character models" fetchpriority="high">
-      </figure>
+      <video id="video" class="hero-video" width="1280" height="768" controls playsinline preload="none"
+             poster="static/videos/quadlink_video_poster.webp" aria-label="QuadLink project video">
+        <source src="static/videos/quadlink_video.mp4" type="video/mp4">
+        <a href="static/videos/quadlink_video.mp4">Download the project video</a>
+      </video>
     </div>
     <div class="credits">
       <div class="authors">
@@ -73,7 +75,7 @@
     <div class="site-shell section-inner">
       <div class="section-heading">
         <h2 id="gallery-title">3D Gallery</h2>
-        <p>Orbit the 3D meshes, switch between methods, and inspect the original polygon boundaries in Topology view.</p>
+        <p>Browse QuadLink's 3D cases by model category. Topology view shows the original polygon boundaries.</p>
       </div>
       <div data-gallery="results">
         <noscript>Enable JavaScript to explore the meshes in 3D.</noscript>
@@ -115,19 +117,12 @@
           <h2 id="curation-title">Data Curation</h2>
           <a class="text-link" href="https://github.com/Graphic-Kiliani/Tri2Quad-Geometry-Aware-Triangle-to-Quad-Mesh-Conversion-Operator">Tri-to-Quad Operator code</a>
         </div>
-        <p>Explore how the Tri-to-Quad Operator converts artist-designed triangle meshes using geometric prefiltering, global merge selection, and normal-consistency enforcement.</p>
+        <p>Explore quad-dominant meshes produced by our Tri-to-Quad Operator from artist-designed triangle meshes.</p>
       </div>
       <div data-gallery="curation">
         <noscript>Enable JavaScript to explore the Tri-to-Quad cases in 3D.</noscript>
       </div>
     </div>
-  </section>
-
-  <section id="video" class="site-shell section-inner" aria-labelledby="video-title">
-    <h2 id="video-title">Project Video</h2>
-    <video class="project-video" controls playsinline preload="none" poster="static/images/quadlink_teaser.jpg">
-      <source src="static/videos/quadlink_video.mp4" type="video/mp4">
-    </video>
   </section>
 
   <section id="BibTeX" class="site-shell section-inner citation" aria-labelledby="citation-title">
@@ -170,16 +165,11 @@
       <div class="viewport-caption">
         <strong data-model-title></strong>
         <span class="viewer-hint">Drag to orbit · Scroll or pinch to zoom</span>
-        <span class="viewer-hint" data-normal-note hidden>Back-facing polygons appear red.</span>
       </div>
     </div>
     <div class="gallery-inspector">
-      <div class="case-filters" aria-label="Case groups"></div>
+      <div class="case-filters" aria-label="Model categories"></div>
       <div class="case-list" aria-label="Mesh cases"></div>
-      <fieldset class="variant-picker" hidden>
-        <legend>Mesh version</legend>
-        <div></div>
-      </fieldset>
       <dl class="mesh-stats" aria-label="Mesh topology"></dl>
     </div>
   </div>

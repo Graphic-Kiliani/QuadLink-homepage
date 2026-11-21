@@ -103,13 +103,6 @@
       color: 0xc6d3ca, roughness: .69, metalness: .08, side: THREE.DoubleSide,
       polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1
     });
-    const backfaceMaterial = surfaceMaterial.clone();
-    backfaceMaterial.onBeforeCompile = (shader) => {
-      shader.fragmentShader = shader.fragmentShader.replace(
-        '#include <color_fragment>',
-        '#include <color_fragment>\nif (!gl_FrontFacing) diffuseColor.rgb = vec3(.70, .09, .06);'
-      );
-    };
     const wireMaterial = new THREE.LineBasicMaterial({ color: 0x24634f, transparent: true, opacity: .8 });
     const group = new THREE.Group();
     scene.add(group, new THREE.HemisphereLight(0xe8fff5, 0x36423c, .8));
@@ -179,17 +172,17 @@
       render();
     }
 
-    function show(data, item, reset) {
+    function show(data, item) {
       const meshes = buildMeshes(data);
       clear();
-      surface = new THREE.Mesh(meshes.surface, item.highlightBackfaces ? backfaceMaterial : surfaceMaterial);
+      surface = new THREE.Mesh(meshes.surface, surfaceMaterial);
       wire = new THREE.LineSegments(meshes.wire, wireMaterial);
       wire.renderOrder = 1;
       radius = meshes.surface.boundingSphere.radius || 1;
       group.rotation.set(...(item.rotation || [0, 0, 0]));
       cameraPosition = item.camera;
       group.add(surface, wire);
-      if (reset) resetView();
+      resetView();
     }
 
     canvas.addEventListener('keydown', (event) => {
@@ -231,17 +224,14 @@
     const poster = select('.viewer-poster');
     const status = select('.viewer-status');
     const title = select('[data-model-title]');
-    const normalNote = select('[data-normal-note]');
     const loadButton = select('.load-viewer');
     const filters = select('.case-filters');
     const cases = select('.case-list');
-    const variants = select('.variant-picker');
     const stats = select('.mesh-stats');
     const rotate = select('[data-rotate]');
     const modes = section.querySelectorAll('.view-modes input');
     let viewport;
     let selection;
-    let currentVariant;
     let mode = 'both';
     let pending;
     let ready = false;
@@ -272,7 +262,7 @@
       }));
     }
 
-    async function loadModel(reset) {
+    async function loadModel() {
       pending?.abort();
       if (!ready) return;
       if (!viewport) {
@@ -283,15 +273,16 @@
         }
       }
       const controller = new AbortController();
+      const item = selection;
       pending = controller;
       announce('Loading mesh…');
       try {
-        const response = await fetch(assetRoot + currentVariant.file, { signal: controller.signal });
+        const response = await fetch(assetRoot + item.file, { signal: controller.signal });
         if (!response.ok) throw new Error('Mesh request failed');
         const text = await response.text();
         if (controller.signal.aborted) return;
         const data = parseObj(text);
-        viewport.show(data, currentVariant, reset);
+        viewport.show(data, item);
         viewport.setMode(mode);
         updateStats(data);
         poster.hidden = true;
@@ -304,37 +295,17 @@
       }
     }
 
-    function pickVariant(variant, reset) {
-      currentVariant = variant;
-      viewport?.clear();
-      stats.replaceChildren();
-      title.textContent = variant.label ? selection.name + ' · ' + variant.label : selection.name;
-      normalNote.hidden = !variant.highlightBackfaces || mode === 'wireframe';
-      poster.src = assetRoot + selection.thumb;
-      poster.hidden = false;
-      loadButton.hidden = ready;
-      loadButton.textContent = 'Load 3D model';
-      loadModel(reset);
-    }
-
     function pickCase(item, button) {
       selection = item;
       for (const candidate of cases.children) candidate.setAttribute('aria-pressed', String(candidate === button));
-      const options = item.variants || [{ file: item.file, rotation: item.rotation, camera: item.camera }];
-      variants.hidden = options.length < 2;
-      variants.querySelector('div').replaceChildren(...options.map((variant, index) => {
-        const label = document.createElement('label');
-        const input = document.createElement('input');
-        const caption = document.createElement('span');
-        input.type = 'radio';
-        input.name = section.dataset.gallery + '-version';
-        input.checked = index === 0;
-        caption.textContent = variant.label;
-        input.addEventListener('change', () => pickVariant(variant, false));
-        label.append(input, caption);
-        return label;
-      }));
-      pickVariant(options[0], true);
+      viewport?.clear();
+      stats.replaceChildren();
+      title.textContent = item.name;
+      poster.src = assetRoot + item.thumb;
+      poster.hidden = false;
+      loadButton.hidden = ready;
+      loadButton.textContent = 'Load 3D model';
+      loadModel();
     }
 
     function browse(group, filter) {
@@ -368,7 +339,6 @@
       input.name = section.dataset.gallery + '-mode';
       input.addEventListener('change', () => {
         mode = input.value;
-        normalNote.hidden = !currentVariant?.highlightBackfaces || mode === 'wireframe';
         viewport?.setMode(mode);
       });
     }
@@ -382,7 +352,7 @@
     function activate() {
       ready = true;
       loadButton.hidden = true;
-      loadModel(true);
+      loadModel();
     }
     loadButton.addEventListener('click', activate);
     browse(groups[0], filters.firstElementChild);
@@ -397,7 +367,7 @@
   (async () => {
     const sections = [...document.querySelectorAll('[data-gallery]')];
     try {
-      const response = await fetch(assetRoot + 'cases.json');
+      const response = await fetch(assetRoot + 'cases.json?v=20261121-categories');
       if (!response.ok) throw new Error('Gallery manifest unavailable');
       const groups = await response.json();
       for (const section of sections) mountGallery(section, groups[section.dataset.gallery]);

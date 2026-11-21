@@ -83,14 +83,16 @@ a { color: inherit; }
 .primary:hover { background: #235548; }
 .secondary { border-color: #b8c9c0; }
 .secondary:hover { background: #e7eee9; }
-.hero-figure {
+.hero-video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 3;
   background: var(--night);
   border: 1px solid #2f403c;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 20px 40px -30px #223c32;
 }
-.hero-figure img { width: 100%; height: auto; }
 .credits { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 23px; }
 .authors, .affiliations { display: flex; flex-wrap: wrap; column-gap: 12px; row-gap: 4px; }
 .authors { font-size: .9375rem; font-weight: 580; }
@@ -127,10 +129,10 @@ h2 { font: 600 clamp(2.25rem, 5vw, 4rem)/1.05 var(--display); letter-spacing: -.
 .viewport-toolbar { border-bottom: 1px solid var(--night-line); flex-wrap: wrap; }
 .viewport-caption { border-top: 1px solid var(--night-line); flex-wrap: wrap; }
 .viewport-caption strong { font: 600 1.15rem/1.35 var(--display); }
-.viewport-toolbar fieldset, .variant-picker { min-width: 0; border: 0; margin: 0; padding: 0; }
-.view-modes, .viewport-actions, .variant-picker > div, .case-filters { display: flex; flex-wrap: wrap; gap: 5px; }
-.view-modes input, .variant-picker input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.view-modes span, .viewport-actions button, .variant-picker span, .case-filters button {
+.viewport-toolbar fieldset { min-width: 0; border: 0; margin: 0; padding: 0; }
+.view-modes, .viewport-actions, .case-filters { display: flex; flex-wrap: wrap; gap: 5px; }
+.view-modes input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.view-modes span, .viewport-actions button, .case-filters button {
   display: block;
   min-height: 35px;
   border: 1px solid transparent;
@@ -143,12 +145,12 @@ h2 { font: 600 clamp(2.25rem, 5vw, 4rem)/1.05 var(--display); letter-spacing: -.
   line-height: 1.4;
 }
 .viewport-actions button { border-color: var(--night-line); }
-.view-modes span:hover, .viewport-actions button:hover, .variant-picker span:hover, .case-filters button:hover { background: #283e36; }
-.view-modes input:checked + span, .viewport-actions button[aria-pressed="true"], .variant-picker input:checked + span, .case-filters button[aria-pressed="true"] {
+.view-modes span:hover, .viewport-actions button:hover, .case-filters button:hover { background: #283e36; }
+.view-modes input:checked + span, .viewport-actions button[aria-pressed="true"], .case-filters button[aria-pressed="true"] {
   background: #a6ecd7;
   color: #102820;
 }
-.view-modes input:focus-visible + span, .variant-picker input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.view-modes input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
 .viewer-canvas {
   display: grid;
   place-items: center;
@@ -213,8 +215,6 @@ h2 { font: 600 clamp(2.25rem, 5vw, 4rem)/1.05 var(--display); letter-spacing: -.
 .case-card:hover { border-color: #7baa9a; background: #243b33; }
 .case-card[aria-pressed="true"] { border-color: var(--accent); background: #29463b; }
 .case-card img { width: 100%; height: 66px; object-fit: contain; }
-.variant-picker legend { font-size: .875rem; margin-bottom: 5px; }
-.variant-picker span { border-color: var(--night-line); }
 .mesh-stats { display: grid; gap: 6px; margin: 0; }
 .mesh-stats div { display: flex; justify-content: space-between; gap: 8px; padding-bottom: 4px; border-bottom: 1px solid var(--night-line); }
 .mesh-stats dt { color: #b5cac2; font-size: .875rem; }
@@ -233,7 +233,6 @@ h2 { font: 600 clamp(2.25rem, 5vw, 4rem)/1.05 var(--display); letter-spacing: -.
 .intro-details p { margin-block: 14px; }
 .intro-details > div { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
 .intro-details img { border-radius: 8px; }
-.project-video { width: 100%; max-height: 72vh; margin-top: 25px; border-radius: 12px; background: #101c1a; }
 .citation { border-top: 1px solid var(--line); padding-top: 50px; }
 .citation pre { overflow: auto; margin-bottom: 0; padding: 22px; border-radius: 8px; background: #e8eee9; font-size: .875rem; }
 .site-footer { border-top: 1px solid var(--line); }
